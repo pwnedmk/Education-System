@@ -79,17 +79,9 @@
                     }
                     $db->close();
                 }
-                else{
-                    echo('<script>alert("Please select student, teacher, or admin")</script>');
-                    login();
-                }
             }
         
             if (isset($_POST['sub'])) {
-                if (!isset($_POST["STAButton"])){
-                    echo('<script>alert("Please select student, teacher, or admin")</script>');
-                    login();
-                }
                 $type = $_POST["STAButton"];
                 $servername = "localhost";
                 $username = "admin"; 
@@ -128,7 +120,7 @@
                         }
                     }
                     if ($check == 0) {
-                        echo '<script>alert("Username does not exist under type '" . $type . "'")</script>';
+                        echo ('<script>alert("Username does not exist under type "' . $type . '")</script>');
                     }
                 }
                 $result->close();
@@ -137,34 +129,4 @@
         ?>
 
     </body>
-    <?php
-function login(){
-    ?>
-    <body id ="blur">
-        <div>
-            <div id ="clear">
-                <h1>Login</h1>
-                <form method=POST>
-                    <div>
-                        <input id="user" type="text" name="user" placeholder="Username">
-                    </div>
-                    <div>
-                        <input id="pass" type="password" name="pass" placeholder="Password">
-                    </div>
-                    <button name="sub" type="submit">Login</button>
-                    <button name="submitNew" type="submit">Create New User</button>
-                    <br>
-                    <input type="radio" name="STAButton" class="STAState" checked id="StudentButton" value="student"/>
-                    <label class="STA" for="StudentButton">Student</label>
-                    <input type="radio" name="STAButton" class="STAState" id="TeacherButton" value="teacher"/>
-                    <label class="STA" for="TeacherButton">Teacher</label>
-                    <input type="radio" name="STAButton" class="STAState" id="AdminButton" value="admin"/>
-                    <label class="STA" for="AdminButton">Admin</label>
-                </form>
-            </div>
-        </div>
-    </body>
-    <?php
-    }
-?>
 </html>
