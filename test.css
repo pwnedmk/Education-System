@@ -1,0 +1,152 @@
+body {
+    margin: 5% 10%;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+nav {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    padding-bottom: 390px;
+    width: 150px;
+    float: left;
+    position: relative;
+    margin-right: 30px;
+}
+#list{
+    border-style: solid;
+    margin-left: 200px;
+    height: 300px;
+}
+#top_performer {
+    width: 300px;
+    height: 257px;
+}
+#none {
+    width: 307px;
+    height: 257px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    padding: 10px;
+    cursor: pointer;
+}
+.col {
+    float:left;
+    padding-left:6px;
+    border-style: solid;
+}
+.col2{
+    float:left;
+    border-style: solid;
+    margin-left: 25px;
+}
+.col3{
+    float:left;
+    border-style: solid;
+    margin-left: 30px;
+    height: 257px;
+}
+/* section calendar */
+.sec_cal {
+    width: 330px;
+    font-family: "NotoSansR";
+}
+
+.sec_cal .cal_nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 30px;
+}
+
+.sec_cal .cal_nav .year-month {
+    width: 300px;
+    text-align: center;
+    line-height: 1;
+}
+
+.sec_cal .cal_nav .nav {
+    display: flex;
+    border: 1px solid #333333;
+    border-radius: 5px;
+}
+
+.sec_cal .cal_nav .go-prev,
+.sec_cal .cal_nav .go-next {
+    display: block;
+    width: 50px;
+    height: 78px;
+    font-size: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sec_cal .cal_nav .go-prev::before,
+.sec_cal .cal_nav .go-next::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #000;
+    border-width: 3px 3px 0 0;
+    transition: border 0.1s;
+}
+
+
+.sec_cal .cal_nav .go-prev::before {
+    transform: rotate(-135deg);
+}
+
+.sec_cal .cal_nav .go-next::before {
+    transform: rotate(45deg);
+}
+
+.sec_cal .cal_wrap {
+    position: relative;
+    margin: 0 auto;
+}
+.sec_cal .cal_wrap .days {
+    display: flex;
+    margin-bottom: 5px;
+    border-bottom: 3px solid #ddd;
+}
+
+.sec_cal .cal_wrap .day {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 7);
+    text-align: left;
+    color: black;
+    font-size: 12px;
+    text-align: center;
+    border-radius:5px
+}
+
+.current.today {background: rgb(106, 104, 104);}
+
+.sec_cal .cal_wrap .dates {
+    display: flex;
+    flex-flow: wrap;
+    height: 150px;
+}
+
+
+
+.sec_cal .cal_wrap .day:nth-child(7n) {
+    color: #ed2a61;
+}
+
+.sec_cal .cal_wrap .day.disable {
+    color: #ddd;
+}
+
+
