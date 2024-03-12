@@ -66,12 +66,12 @@ function calendarInit() {
     // go prev
     document.querySelector('.go-prev').addEventListener('click', function() {
         thisMonth = new Date(currentYear, currentMonth - 1, 1);
-        renderCalendar(thisMonth);
+        renderCalender(thisMonth);
     });
 
     // go next
     document.querySelector('.go-next').addEventListener('click', function() {
         thisMonth = new Date(currentYear, currentMonth + 1, 1);
-        renderCalendar(thisMonth); 
+        renderCalender(thisMonth); 
     });
 }
