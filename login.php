@@ -34,7 +34,7 @@
             ini_set('display_errors', 1);
             // submitting new user and pass
             if (isset($_POST["submitNew"])) {
-                if (isset($_POST["STAButton"])){
+                if (isset($_POST["STAButton"])) {
                     $type = $_POST["STAButton"];
                     $servername = "localhost";
                     $username = "admin"; // user name
@@ -47,7 +47,8 @@
             
                     if ($db->connect_errno > 0) {
                         die('Unable to connect to database [' . $db->connect_error . ']');
-                    } else {
+                    } 
+                    else {
                         $user = $_POST["user"]; // turn into string taken from https://www.geeksforgeeks.org/php-strval-function/#:~:text=The%20strval()%20function%20is,or%20double)%20to%20a%20string.
                         $pass = $_POST["pass"];
             
@@ -65,22 +66,19 @@
                             }
                         }
             
-                        if ($check == 0) {
-                            $sql_insert = "INSERT INTO login VALUES ('" . $user . "', '" . $pass . "', 'student')"; // syntax
-                            $sql_insertT = "INSERT INTO login VALUES ('" . $user . "', '" . $pass . "', 'teacher')";
-                            $sql_insertA = "INSERT INTO login VALUES ('" . $user . "', '" . $pass . "', 'admin')";
+                        if ($check == 0) { 
+                            $sql_insert = "INSERT INTO login VALUES ('" . $user . "', '" . $pass . "', '" . $type . "')";
                             $db->query($sql_insert) or die('Sorry, database operation was failed');
                             session_start();
                             $_SESSION["Username"] = $user;
-                            echo '<script>alert("Account created :D")</script>';
-                            header("Location:exam.php");
-                            exit();
+                            header("Location: login.php");
                         }
                     }
+                    $result->close();
                     $db->close();
                 }
             }
-        
+
             if (isset($_POST['sub'])) {
                 $type = $_POST["STAButton"];
                 $servername = "localhost";
@@ -111,10 +109,9 @@
                             if ($row["password"] != $pass) {
                                 echo '<script>alert("Username does not match password")</script>';
                             } else {
-                                echo "connected";
                                 session_start();
                                 $_SESSION["Username"] = $name;
-                                header("Location: exam.php");
+                                header("Location: design.php");
                                 exit();
                             }
                         }
