@@ -2,6 +2,7 @@
  
     <head>
         <title>Login</title>
+        <link rel="stylesheet" type="text/css" href="login.css">
     </head>
 
     <body id ="blur">
