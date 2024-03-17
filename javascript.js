@@ -21,7 +21,7 @@ function calendarInit() {
         // Organizing Data for Rendering
         currentYear = thisMonth.getFullYear();
         currentMonth = thisMonth.getMonth();
-        currentDate = thisMonth.getDate();
+        //currentDate = thisMonth.getDate();
 
         // Find the date and day of the last day of the previous month
         var startDay = new Date(currentYear, currentMonth, 0);
@@ -48,7 +48,11 @@ function calendarInit() {
                 }
                 // this month
                 for (var i = 1; i <= nextDate; i++) {
-                    calendar.innerHTML += '<div class="day current">' + i + '</div>';
+                    if (currentMonth === today.getMonth() && i === today.getDate()){
+                    calendar.innerHTML += '<div class="day current today">' + i + '</div>';
+                    }else {
+                        calendar.innerHTML +='<div class="day current">' + i + '</div>';
+                    }
                 }
                 // next month
                 for (var i = 1; i <= (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
