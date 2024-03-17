@@ -74,7 +74,7 @@ li {
 
 .sec_cal .cal_nav .nav {
     display: flex;
-    border: 1px solid #333333;
+    border: 1px solid #757171;
     border-radius: 5px;
 }
 
@@ -131,7 +131,7 @@ li {
     border-radius:5px
 }
 
-.current.today {background: rgb(106, 104, 104);}
+.current.today {background: rgb(191, 190, 190);}
 
 .sec_cal .cal_wrap .dates {
     display: flex;
