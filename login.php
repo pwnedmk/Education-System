@@ -74,7 +74,7 @@
                             $db->query($sql_insert) or die('Sorry, database operation was failed');
                             session_start();
                             $_SESSION["Username"] = $user;
-                        ("Location: login.php");
+                            ("Location: login.php");
                         }
                     }
                     $result->close();
@@ -114,7 +114,12 @@
                             } else {
                                 session_start();
                                 $_SESSION["Username"] = $name;
-                                header("Location: design.php");
+                                if($type = 'student') {
+                                    header("Location: student_page.php");    
+                                }
+                                if($type = 'teacher') {
+                                    header("Location: tearchers_page.php");    
+                                }
                                 exit();
                             }
                         }
