@@ -2,32 +2,34 @@
  
     <head>
         <title>Login</title>
-        <link rel="stylesheet" type="text/css" href="login.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="login.css">
     </head>
 
     <body id ="blur">
-        <div>
-            <div id ="clear">
-                <h1>Login</h1>
-                <form method=POST>
-                    <div>
-                        <input id="user" type="text" name="user" placeholder="Username">
-                    </div>
-                    <div>
-                        <input id="pass" type="password" name="pass" placeholder="Password">
-                    </div>
-                    <button name="sub" type="submit">Login</button>
-                    <button name="submitNew" type="submit">Create New User</button>
-                    <br>
-                    <input type="radio" name="STAButton" class="STAState" checked id="StudentButton" value="student"/>
-                    <label class="STA" for="StudentButton">Student</label>
-                    <input type="radio" name="STAButton" class="STAState" id="TeacherButton" value="teacher"/>
-                    <label class="STA" for="TeacherButton">Teacher</label>
-                    <input type="radio" name="STAButton" class="STAState" id="AdminButton" value="admin"/>
-                    <label class="STA" for="AdminButton">Admin</label>
-                </form>
+        <form method=POST>
+            <div class="login-box">
+            <h1>Login</h1>
+
+            <div class="textbox">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <input id="user" type="text" name="user" placeholder="Username">
             </div>
-        </div>
+            <div class="textbox">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+                <input id="pass" type="password" name="pass" placeholder="Password">
+            </div>
+            <button class="button" name="sub" type="submit">Login</button>
+            <button class="button" name="submitNew" type="submit">Create New User</button>
+            <br>
+            <input type="radio" name="STAButton" class="STAState" checked id="StudentButton" value="student"/>
+            <label class="STA" for="StudentButton">Student</label>
+            <input type="radio" name="STAButton" class="STAState" id="TeacherButton" value="teacher"/>
+            <label class="STA" for="TeacherButton">Teacher</label>
+            <input type="radio" name="STAButton" class="STAState" id="AdminButton" value="admin"/>
+            <label class="STA" for="AdminButton">Admin</label>
+            </div>
+        </form>
 
         <?php
             // Report all error information on the webpage
@@ -72,7 +74,7 @@
                             $db->query($sql_insert) or die('Sorry, database operation was failed');
                             session_start();
                             $_SESSION["Username"] = $user;
-                            header("Location: login.php");
+                        ("Location: login.php");
                         }
                     }
                     $result->close();

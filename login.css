@@ -58,3 +58,7 @@ body {
     cursor: pointer;
     margin: 12px 0;
 }
+
+.fa-user, .fa-lock {
+    transform: translateY(2.5px);
+}
