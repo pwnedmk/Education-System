@@ -62,3 +62,45 @@ body {
 .fa-user, .fa-lock {
     transform: translateY(2.5px);
 }
+
+#message {
+    display:none;
+    background: #f1f1f1;
+    color: #000;
+    position: absolute;
+    transform: translateX(30%);
+    transform: translateY(50%);
+    padding: 20px;
+    margin-top: 10px;
+    width: 280px;
+  }
+  
+  #message p {
+    padding: 10px 35px;
+    font-size: 18px;
+  }
+  
+  .valid {
+    color: green;
+  }
+  
+  .valid:before {
+    position: relative;
+    left: -35px;
+    content: "\2713";
+  }
+  
+  /* Add a red text color and an "x" icon when the requirements are wrong */
+  .invalid {
+    color: red;
+  }
+  
+  .invalid:before {
+    position: relative;
+    left: -35px;
+    content: "\2716";
+  }
+
+  .wrapper {
+    display: flex;
+  }
