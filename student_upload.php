@@ -1,69 +1,106 @@
+<?php
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Check if the user is logged in
+// if (!isset($_SESSION["Username"]) || $_SESSION["UserType"] != 'student') {
+//     header("Location: login.php");
+//     exit();
+// }
+
+$servername = "localhost";
+$username = "admin";
+$password = "admin";
+$dbname = "educationsystem";
+
+$student_id = $_SESSION["ID"];
+
+// Check if assignment_id is provided in the URL
+if (isset($_GET['assignment_id'])) {
+    $assignment_id = $_GET['assignment_id'];
+    echo "Assignment ID: " . $assignment_id;
+} else {
+    echo "Assignment ID not provided.";
+    exit();
+}
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $file_name = $_FILES["file"]["name"];
+    $file_tmp = $_FILES["file"]["tmp_name"];
+    $file_path = "upload_stu/" . $file_name;
+
+    // Check if the directory exists and is writable
+    if (!is_dir("upload_stu") || !is_writable("upload_stu")) {
+        echo "Upload directory does not exist or is not writable.";
+        exit();
+    }
+
+    if (move_uploaded_file($file_tmp, $file_path)) {
+        echo "Assignment ID: " . $assignment_id . "<br>";
+        echo "Student ID: " . $student_id . "<br>";
+        echo "File Path: " . $file_path . "<br>";
+
+        // Use prepared statement to prevent SQL injection
+        $sql = "INSERT INTO student_submissions (assignment_id, student_id, file_path) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+
+        if ($stmt === false) {
+            echo "Error preparing statement: " . $conn->error;
+            exit();
+        }
+
+        $stmt->bind_param("iis", $assignment_id, $student_id, $file_path);
+
+        if ($stmt->execute()) {
+            echo "Assignment submitted successfully.";
+        } else {
+            echo "Error submitting assignment: " . $stmt->error;
+        }
+
+        $stmt->close();
+    } else {
+        echo "Error uploading file.";
+    }
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Upload Assignment</title>
-    <link rel="stylesheet" type="text/css" href="test2.css">
+    <link rel="stylesheet" type="text/css" href="test4.css">
 </head>
 <body>
-<nav id="menu_area">
+    <nav id="menu_area">
         <ul>
             <li><a href="student_page.php">Home</a></li>
             <li>Student List</li>
-            <li><a href="student_upload.php">Create Assignment</a></li>
+            <!-- <li><a href="student_upload.php">Create Assignment</a></li> -->
             <li>Grade Assignment</li>
             <li>Calendar</li>
         </ul>
     </nav>
     <div class="container">
         <h2>Upload Assignment</h2>
-        <form method="POST" action="upload_assignment.php" enctype="multipart/form-data" class="upload-form">
-            <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" name="title" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea name="description" required></textarea>
-            </div>
+        <form method="POST" action="" enctype="multipart/form-data" class="upload-form">
             <div class="form-group">
                 <label for="file">Assignment File:</label>
                 <input type="file" name="file" required>
+                <input type="hidden" name="assignment_id" value="<?php echo $assignment_id; ?>">
             </div>
             <input type="submit" value="Upload Assignment" class="btn">
         </form>
-        <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $title = $_POST["title"];
-            $description = $_POST["description"];
-            $file_name = $_FILES["file"]["name"];
-            $file_tmp = $_FILES["file"]["tmp_name"];
-            $file_path = "uploads/" . $file_name;
-
-            if (move_uploaded_file($file_tmp, $file_path)) {
-                $servername = "localhost";
-                $username = "admin";
-                $password = "admin";
-                $dbname = "educationsystem";
-
-                $conn = new mysqli($servername, $username, $password, $dbname);
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
-
-                $sql = "INSERT INTO assignments (title, description, file_path) VALUES ('$title', '$description', '$file_path')";
-                if ($conn->query($sql) === TRUE) {
-                    echo "<div class='success-message'>Assignment uploaded successfully.</div>";
-                } else {
-                    echo "<div class='error-message'>Error uploading assignment: " . $conn->error . "</div>";
-                }
-
-                $conn->close();
-            } else {
-                echo "<div class='error-message'>Error uploading file.</div>";
-            }
-        }
-        ?>
     </div>
 </body>
 </html>
