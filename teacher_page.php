@@ -1,17 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>test</title>
     <script src="javascript.js"></script>
-    <link rel="stylesheet" type="text/css" href="test2.css">
+    <link rel="stylesheet" type="text/css" href="test4.css">
 </head>
 <body>
     <nav id="menu_area">
         <ul>
-            <li><a href="teachers_page.php">Home</a></li>
-            <li>Student List</li>
-            <li><a href="upload_assignment.php">Create Assignment</a></li>
+            <li><a href="teacher_page.php">Home</a></li>
+            <li><a href="studentlist.php">Student List</a></li>
+            <li><a href="upload_assignment.php?user_type=teacher">Create Assignment</a></li>
             <li>Grade Assignment</li>
             <li>Calendar</li>
         </ul>
