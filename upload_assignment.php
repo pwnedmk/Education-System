@@ -116,7 +116,10 @@ $conn->close();
             <?php if ($_GET['user_type'] === 'teacher'): ?>
                 <div class="form-group">
                     <label for="title">Title:</label>
-                    <input id= titl type="text" name="title" required>
+                    <div id= titl>
+                    <input type="text" name="title" required>
+            
+            </div>
                 </div>
                 <div class="form-group">
                     <label for="description">Description:</label>

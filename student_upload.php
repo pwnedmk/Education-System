@@ -51,14 +51,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Use prepared statement to prevent SQL injection
         $sql = "INSERT INTO student_submissions (assignment_id, student_id, file_path) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
-
+        
         if ($stmt === false) {
             echo "Error preparing statement: " . $conn->error;
             exit();
         }
-
+        
         $stmt->bind_param("iis", $assignment_id, $student_id, $file_path);
-
         if ($stmt->execute()) {
             echo "Assignment submitted successfully.";
         } else {
@@ -69,7 +68,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Error uploading file.";
     }
+
 }
+if (isset($_GET['assignment_id'])) {
+    $assignment_id = $_GET['assignment_id'];
+    echo "Assignment ID: " . $assignment_id;
+} else {
+    echo "Assignment ID not provided.";
+    exit();
+}
+
 
 $conn->close();
 ?>
@@ -78,6 +86,7 @@ $conn->close();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    
     <title>Upload Assignment</title>
     <link rel="stylesheet" type="text/css" href="test4.css">
 </head>
@@ -92,15 +101,21 @@ $conn->close();
         </ul>
     </nav>
     <div class="container">
-        <h2>Upload Assignment</h2>
+    <?php if (isset($assignment_id)): ?>
+    <div class="container"> 
+        <h2 id="h2-stu">Upload Assignment</h2>
         <form method="POST" action="" enctype="multipart/form-data" class="upload-form">
             <div class="form-group">
-                <label for="file">Assignment File:</label>
-                <input type="file" name="file" required>
+                <label id= ags_stu for="file">Assignment File:</label>
+                <input id= file type="file" name="file" required>
                 <input type="hidden" name="assignment_id" value="<?php echo $assignment_id; ?>">
             </div>
-            <input type="submit" value="Upload Assignment" class="btn">
+            <div id = submit-stu>
+            <input type="submit" value="Submit Assignment" class="btn">
+            
+            </div>
         </form>
     </div>
+    <?php endif; ?>
 </body>
 </html>
