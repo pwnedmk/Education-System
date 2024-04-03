@@ -223,7 +223,8 @@ td{
     padding-right: 20px;
     font-size: 50px;
     font-weight: 300;
-    box-shadow: 15px 0px 30px grey;
+    font-family:system-ui;
+    box-shadow: 12px 3px 17px lightskyblue;
     border-radius: 13px;
 }
 
@@ -238,6 +239,7 @@ td{
     font-size: 15px;
     font-weight: 300;
 }
+
 .form-group #chooseFile{
     display: flex;
     justify-content: space-between;
@@ -246,28 +248,35 @@ td{
     padding-bottom: 2px;
     padding-top: 2px;
 }
-.form-group #titl {
+.container #h2-stu {
     display: flex;
-    padding-left: 113px;
-    padding-right: 104px;
-    padding-bottom: 1px;
-    padding-top: 13px;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: stretch;
-    align-items: center;
+    justify-content: center;
+    color: #093379;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 50px;
+    font-weight: 300;
+    box-shadow: 12px 3px 17px lightskyblue;
+    border-radius: 13px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+} 
+
+  #titl input[type="text"] {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    width: 367px; 
+    padding: 10px; 
 }
+
+
 .form-group #desc {
-    display: flex;
-    padding-left: 113px;
-    padding-right: 91px;
-    padding-bottom: 40px;
-    padding-top: 86px;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: stretch;
-    align-items: center;
+        width: 413px; 
+        height: 205px; 
+        padding: 4px; 
 }
+
 .form-group #submit {
     display: flex;
     justify-content: center;
@@ -285,3 +294,21 @@ td{
     justify-content: center;
         }
 
+.form-group #ags_stu{
+            color: #094d79;
+            font-size: 19px;
+            font-weight: 300;
+ }
+
+#submit-stu{
+    display: flex;
+    justify-content: center;
+    padding: 27px;
+       
+}  
+
+#file{
+    display: flex;
+    justify-content: center;
+    padding: 1px;
+}
