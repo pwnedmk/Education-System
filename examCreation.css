@@ -1,0 +1,57 @@
+body {
+    margin: 20px;
+    padding: 0;
+    font-family: sans-serif;
+    background: #f2f2f2; 
+    
+}
+.addQs{
+    transition-duration: 0.4s;
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.addQs:hover {
+    background-color: #191970;
+    color: #f2f2f2;
+}
+.submitExam{
+    color: rgb(0, 0, 0);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.qnas {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.qnas input[type="text"],
+.qnas input[type="radio"] {
+    margin-right: 10px;
+}
+
+.qnas label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+.Del {
+    background-color: #c00000b0;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.Del:hover {
+    background-color: #8f0000b0;
+}
