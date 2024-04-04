@@ -50,7 +50,7 @@ document.getElementById("submitE").addEventListener("click", function() {
                 // send to home or pop up box
                 //document.getElementById("error").insertAdjacentHTML("beforeend", xhr.responseText);
                 alert("Test/quiz Submitted");
-                window.location.href = "/education/teachers_page.php";
+                window.location.href = "/education/teacher_page.php";
             }
         };
         xhr.send(formData);
@@ -62,3 +62,8 @@ function DelQ(index1) {
         question.remove();
     }
 }
+document.getElementById("home").addEventListener("click", function (){
+    if (confirm("Are you sure you want to go back?\nYou will lose all progress on this quiz") == true){
+        window.location.href = "/education/teacher_page.php"
+    }
+})
