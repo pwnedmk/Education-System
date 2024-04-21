@@ -16,6 +16,7 @@
             <li><a href="exam.html">Create Test/Quiz</a></li>
             <li>Grade Assignment</li>
             <li>Calendar</li>
+            <li><a href="logout.php"><button>Logout</button></a></li>
         </ul>
     </nav>
     <div id="content_area">
