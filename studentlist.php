@@ -8,7 +8,7 @@
 <body>
 <nav id="menu_area">
     <ul>
-        <li><a href="teachers_page.php">Home</a></li>
+        <li><a href="teacher_page.php">Home</a></li>
         <li><a href="studentlist.php">Student List</a></li>
         <li><a href="upload_assignment.php?user_type=teacher">Create Assignment</a></li>
         <li>Grade Assignment</li>

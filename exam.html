@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Exam Creation</title>
+    <link rel="stylesheet" href="examCreation.css">
 </head>
 <body>
-    <button id="addMC">Add Multiple Choice Question</button>
-    <button id="addFIB">Add Fill in the Blank Question</button>
-    <button id="addEssay">Add Essay Question</button>
+    <label for="addTitle">Title: </label>
+    <input type="text" id="addTitle" name="examTitle" placeholder="Enter a title for your test/quiz">
+    <br><br>
+    <button class="addQs" id="addMC">Add Multiple Choice Question</button>
+    <button class="addQs" id="addFIB">Add Fill in the Blank Question</button>
+    <button class="addQs" id="addEssay">Add Essay Question</button>
     <br><br>
     <div id="qContainer"></div>
-    <button id="submit">Submit Exam</button>
+    <div id="error"></div>
+    <button class="submitExam" id="submitE">Submit Exam</button>
+    <a href="teacher_page.php"><button class="submitExam" id="home">Back to Home</button></a>
     <script src="exam.js"></script>
 </body>
 </html>
