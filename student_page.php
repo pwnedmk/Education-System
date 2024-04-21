@@ -77,21 +77,7 @@ $conn->close();
 </div>
         <hr>
         <div id="horizontal_section">
-            <div class="col" id="top_performer">
-                <ul>
-                    <li>.</li>
-                    <li></li>
-                    <li>.</li>
-                </ul>
-            </div>
-            <div class="col2" id="none">
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-            <div class="col3" id="calendar">
+            <div class="col1" id="calendar">
                 <div class="sec_cal">
                     <div class="cal_nav">
                         <a href="javascript:;" class="nav-btn go-prev">prev</a>
@@ -112,6 +98,21 @@ $conn->close();
                     </div>
                 </div>
             </div>
+            <div class="col2" id="none">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+            <div class="col3" id="top_performer">
+                <ul>
+                    <li>.</li>
+                    <li></li>
+                    <li>.</li>
+                </ul>
+            </div>
+           
         </div>
     </div>
 </body>
