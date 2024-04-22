@@ -2,6 +2,7 @@ body {
     margin: 5% 10%;
     padding: 0;
     font-family: Arial, sans-serif;
+    position: absolute;
 }
 
 nav {
@@ -18,13 +19,13 @@ nav {
 li:hover {
     background-color: #b9b5b5;
 }
-#content_area {
-    position: absolute;
-}
+
 #list{
     border-style: solid;
     margin-left: 200px;
     height: 300px;
+    position: relative;
+    padding-right: 40px;
 }
 #top_performer {
     width: 300px;

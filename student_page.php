@@ -73,7 +73,7 @@ $conn->close();
         ?>
     </div>
     <!-- Rest of the code remains the same -->
-</div>
+    
         <hr>
         <div id="horizontal_section">
             <div class="col1" id="calendar">
@@ -111,7 +111,7 @@ $conn->close();
                     <li>.</li>
                 </ul>
             </div>
-           
+        </div>
         </div>
     </div>
 </body>
