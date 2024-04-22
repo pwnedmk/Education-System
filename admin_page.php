@@ -12,6 +12,7 @@
                 <li><a href="studentlist1.php">Student List</a></li>
                 <li><a href="teacherlist.php">Teacher List</a></li>
                 <li>Create NewUsers</li>
+                <li><a href="logout.php"><button>Logout</button></a></li>
             </ul>
         </nav>
     </body>
