@@ -23,11 +23,9 @@ $sql = "SELECT 1";
 $result = $conn->query($sql);
 
 if ($result !== false) {
-    echo "Database connection successful.
-";
+    echo "Database connection successful.\n";
 } else {
-    echo "Database connection failed.
-";
+    echo "Database connection failed.\n";
 }
 
 // Target directory
@@ -35,8 +33,7 @@ $targetDir = "uploads/";
 
 // Check if the directory exists and is writable
 if (!is_dir($targetDir) || !is_writable($targetDir)) {
-    echo "Target directory does not exist or is not writable.
-";
+    echo "Target directory does not exist or is not writable.\n";
     exit();
 }
 
@@ -48,28 +45,45 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
     if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetPath)) {
         $title = $_POST['title'];
         $description = $_POST['description'];
+        $dueDate = $_POST['due_date'];
 
-        echo "Title: " . $title . "
-";
-        echo "Description: " . $description . "
-";
-        echo "File Path: " . $targetPath . "
-";
+        echo "Title: " . $title . "\n";
+        echo "Description: " . $description . "\n";
+        echo "Due Date: " . $dueDate . "\n";
+        echo "File Path: " . $targetPath . "\n";
 
         // Use prepared statement to prevent SQL injection
         $sql = "INSERT INTO teacher_assignments (title, description, file_path) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
         if ($stmt === false) {
-            echo "Error preparing statement: " . $conn->error . "
-";
+            echo "Error preparing statement: " . $conn->error . "\n";
             exit();
         }
 
         $stmt->bind_param("sss", $title, $description, $targetPath);
 
         if ($stmt->execute()) {
-            echo "Assignment uploaded successfully and saved to teacher_assignments table";
+            $assignmentId = $conn->insert_id;
+            
+            // Insert the due date into the assignmentdate table
+            $sqlDueDate = "INSERT INTO assignmentdate (assignment_id, due_date) VALUES (?, ?)";
+            $stmtDueDate = $conn->prepare($sqlDueDate);
+            
+            if ($stmtDueDate === false) {
+                echo "Error preparing due date statement: " . $conn->error . "\n";
+                exit();
+            }
+            
+            $stmtDueDate->bind_param("is", $assignmentId, $dueDate);
+            
+            if ($stmtDueDate->execute()) {
+                echo "Assignment uploaded successfully and saved to teacher_assignments table";
+            } else {
+                echo "Error inserting due date: " . $stmtDueDate->error;
+            }
+            
+            $stmtDueDate->close();
         } else {
             echo "Error: " . $sql . " Error Details: " . $stmt->error;
         }
@@ -91,9 +105,6 @@ $conn->close();
     <meta charset="UTF-8">
     <title>Upload Assignment</title>
     <link rel="stylesheet" type="text/css" href="test4.css">
-    <style>
-   
-</style>
 </head>
 <body>
     <nav id="menu_area">
@@ -107,29 +118,32 @@ $conn->close();
         </ul>
     </nav>
     <div class="container">
-        <h2 id =h2 >Upload Assignment</h2>
+        <h2 id="h2">Upload Assignment</h2>
         <form method="POST" action="" enctype="multipart/form-data" class="upload-form">
             <div class="form-group">
                 <label for="file">Assignment File:</label>
-                <input id=chooseFile type="file" name="file" required>
+                <input id="chooseFile" type="file" name="file" required>
             </div>
             
             <?php if ($_GET['user_type'] === 'teacher'): ?>
                 <div class="form-group">
                     <label for="title">Title:</label>
-                    <div id= titl>
+                    <div id="titl">
                     <input type="text" name="title" required>
-            
-            </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="description">Description:</label>
-                    <textarea  id= desc name="description" required></textarea>
+                    <textarea id="desc" name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="due_date">Due Date:</label>
+                    <input type="date" name="due_date" id="due_date" required>
                 </div>
             <?php endif; ?>
             <div class="submit">
             <input type="hidden" name="user_type" value="<?php echo $_GET['user_type']; ?>">
-            <input id= submit type="submit" value="Upload Assignment" class="btn">
+            <input id="submit" type="submit" value="Upload Assignment" class="btn">
             </div>
         </form>
     </div>
