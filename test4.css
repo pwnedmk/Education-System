@@ -24,9 +24,15 @@ li:hover {
     border-style: solid;
     margin-left: 200px;
     height: 300px;
+    overflow-y: auto;
     position: relative;
     padding-right: 40px;
 }
+
+#listHeader {
+    background-color:white;
+}
+
 #top_performer {
     width: 300px;
     height: 257px;

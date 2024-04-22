@@ -32,8 +32,9 @@ if ($result_student_id->num_rows == 0) {
 } 
 
 // Retrieve the list of assignments from the teacher_assignments table
-$sql_assignments = "SELECT id, title, file_path FROM teacher_assignments";
-$result_assignments = $conn->query($sql_assignments);
+$sql_assignments = "SELECT teacher_assignments.id, teacher_assignments.title, teacher_assignments.file_path, due_date FROM teacher_assignments
+JOIN assignmentDate on teacher_assignments.id=assignmentDate.assignment_id";
+$result_assignments = $conn->query($sql_assignments);   
 
 $conn->close();
 ?>
@@ -60,12 +61,15 @@ $conn->close();
     </nav>
     <div id="content_area">
     <div id="list">
-        <h3>Assignment List</h3>
+        <h3 id="listHeader">Assignment List</h3>
         <?php
         if ($result_assignments->num_rows > 0) {
             while ($row_assignment = $result_assignments->fetch_assoc()) {
                 echo "<p style='background-color: white, color: red;'><a href='student_upload.php?assignment_id=" . $row_assignment['id'] . "'>" . $row_assignment['title'] . "</a>";
-                echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a></hr></p>";
+                echo "<span style='margin-left: 10px;'>Due Date: " . $row_assignment['due_date'] . "</span>";
+                echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a></hr>";
+                
+                echo "</p>";
             }
         } else {
             echo "<p>No assignments found</p>";
