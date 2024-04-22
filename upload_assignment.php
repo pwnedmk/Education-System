@@ -46,14 +46,16 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
         $title = $_POST['title'];
         $description = $_POST['description'];
         $dueDate = $_POST['due_date'];
+        $score = $_POST['score'];
 
         echo "Title: " . $title . "\n";
         echo "Description: " . $description . "\n";
         echo "Due Date: " . $dueDate . "\n";
+        echo "Score: " . $score . "\n";
         echo "File Path: " . $targetPath . "\n";
 
         // Use prepared statement to prevent SQL injection
-        $sql = "INSERT INTO teacher_assignments (title, description, file_path) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO teacher_assignments (title, description, file_path, score) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
         if ($stmt === false) {
@@ -61,9 +63,10 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
             exit();
         }
 
-        $stmt->bind_param("sss", $title, $description, $targetPath);
+        $stmt->bind_param("sssi", $title, $description, $targetPath, $score);
 
         if ($stmt->execute()) {
+            echo "Assignment uploaded successfully and saved to teacher_assignments table\n";
             $assignmentId = $conn->insert_id;
             
             // Insert the due date into the assignmentdate table
@@ -78,22 +81,22 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
             $stmtDueDate->bind_param("is", $assignmentId, $dueDate);
             
             if ($stmtDueDate->execute()) {
-                echo "Assignment uploaded successfully and saved to teacher_assignments table";
+                echo "Due date inserted successfully\n";
             } else {
-                echo "Error inserting due date: " . $stmtDueDate->error;
+                echo "Error inserting due date: " . $stmtDueDate->error . "\n";
             }
             
             $stmtDueDate->close();
         } else {
-            echo "Error: " . $sql . " Error Details: " . $stmt->error;
+            echo "Error inserting assignment: " . $stmt->error . "\n";
         }
 
         $stmt->close();
     } else {
-        echo "Error moving the file";
+        echo "Error moving the file\n";
     }
 } else {
-    echo "File not uploaded";
+    echo "File not uploaded\n";
 }
 
 $conn->close();
@@ -139,6 +142,10 @@ $conn->close();
                 <div class="form-group">
                     <label for="due_date">Due Date:</label>
                     <input type="date" name="due_date" id="due_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="score">Score:</label>
+                    <input type="number" name="score" id="score" required>
                 </div>
             <?php endif; ?>
             <div class="submit">
