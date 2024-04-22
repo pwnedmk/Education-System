@@ -55,6 +55,7 @@ $conn->close();
             <!-- <li><a href="student_upload.php">upload assignment</a></li> -->
             <li>Calendar</li>
             <li><a href="takeExam.php?examID=29">Sample Test/Quiz</a></li>
+            <li><a href="logout.php"><button>Logout</button></a></li>
         </ul>
     </nav>
     <div id="content_area">
@@ -73,24 +74,10 @@ $conn->close();
         ?>
     </div>
     <!-- Rest of the code remains the same -->
-</div>
+    
         <hr>
         <div id="horizontal_section">
-            <div class="col" id="top_performer">
-                <ul>
-                    <li>.</li>
-                    <li></li>
-                    <li>.</li>
-                </ul>
-            </div>
-            <div class="col2" id="none">
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-            <div class="col3" id="calendar">
+            <div class="col1" id="calendar">
                 <div class="sec_cal">
                     <div class="cal_nav">
                         <a href="javascript:;" class="nav-btn go-prev">prev</a>
@@ -111,6 +98,21 @@ $conn->close();
                     </div>
                 </div>
             </div>
+            <div class="col2" id="none">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+            <div class="col3" id="top_performer">
+                <ul>
+                    <li>.</li>
+                    <li></li>
+                    <li>.</li>
+                </ul>
+            </div>
+        </div>
         </div>
     </div>
 </body>
