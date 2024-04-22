@@ -22,6 +22,7 @@
             <th width="70">Image</th>
             <th width="500">Name</th>
             <th width="150">Email</th>
+            <th width="50">Select</th>
         </tr>
         </thead>
         <?php
