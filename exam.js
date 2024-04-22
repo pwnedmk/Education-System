@@ -29,10 +29,25 @@ document.getElementById("submitE").addEventListener("click", function() {
     var qContainer = document.getElementById("qContainer");
     var responsestxt = qContainer.querySelectorAll("input[type='text']");
     var title = document.getElementById("addTitle").value;
-    if (title == ""){
+    var date = document.getElementById("date").value;
+    console.log(date);
+    var parsedDate = parseDate(date);
+    console.log(parsedDate);
+    var timeHR = document.getElementById("dueHour").value;
+    var timeMIN = document.getElementById("dueMin").value;
+    var ampm = document.getElementsByName("ampm");
+    if (parsedDate == "" || timeHR == "" || timeMIN == ""){
+        alert("Please enter a due date/time");
+    }
+    else if (title == ""){
         alert("Please enter a title");
     }
     else{
+        ampm.forEach(function(ampm){
+            if (ampm.checked){
+                formData.append(ampm.name, ampm.value);
+            }
+        });
         responsestxt.forEach(function(response){
             formData.append(response.name, response.value);
         })
@@ -41,16 +56,18 @@ document.getElementById("submitE").addEventListener("click", function() {
             formData.append(radio.name, radio.value);
         });
         formData.append('index', index);
-
         formData.append('title', title);
+        formData.append('date', parsedDate);
+        formData.append('dueHour', timeHR);
+        formData.append('dueMin', timeMIN);
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "submitexam.php", true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 // send to home or pop up box
-                //document.getElementById("error").insertAdjacentHTML("beforeend", xhr.responseText);
-                alert("Test/quiz Submitted");
-                window.location.href = "/education/teacher_page.php";
+                document.getElementById("error").insertAdjacentHTML("beforeend", xhr.responseText);
+                //alert("Test/quiz Submitted");
+                //window.location.href = "/edusys4/teacher_page.php";
             }
         };
         xhr.send(formData);
@@ -64,6 +81,16 @@ function DelQ(index1) {
 }
 document.getElementById("home").addEventListener("click", function (){
     if (confirm("Are you sure you want to go back?\nYou will lose all progress on this quiz") == true){
-        window.location.href = "/education/teacher_page.php"
+        window.location.href = "/edusys4/teacher_page.php"
     }
-})
+});
+function parseDate(date){
+    var parsedDate = date.split("/");
+    var fullDate = "";
+    fullDate += parsedDate[2];
+    fullDate += "-";
+    fullDate += parsedDate[0];
+    fullDate += "-";
+    fullDate += parsedDate[1];
+    return fullDate;
+}

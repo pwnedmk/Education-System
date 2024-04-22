@@ -9,6 +9,15 @@
     <label for="addTitle">Title: </label>
     <input type="text" id="addTitle" name="examTitle" placeholder="Enter a title for your test/quiz">
     <br><br>
+    <label for="date">Due Date: </label>
+    <input type="text" id="date" class="date" name="examDueDate" placeholder="MM/DD/YYYY">
+    <input type="text" id="dueHour" class="dateTime" name="examDueHour" placeholder="hr">:
+    <input type="text" id="dueMin" class="dateTime" name="examDueMinute" placeholder="min">
+    <input type="radio" id="am" name="ampm" value="AM">
+    <label for="am">AM</label>
+    <input type="radio" id="pm" name="ampm" value="PM">
+    <label for="pm">PM</label>
+    <br><br>
     <button class="addQs" id="addMC">Add Multiple Choice Question</button>
     <button class="addQs" id="addFIB">Add Fill in the Blank Question</button>
     <button class="addQs" id="addEssay">Add Essay Question</button>
