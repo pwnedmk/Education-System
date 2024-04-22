@@ -55,6 +55,7 @@ $conn->close();
             <!-- <li><a href="student_upload.php">upload assignment</a></li> -->
             <li>Calendar</li>
             <li><a href="takeExam.php?examID=29">Sample Test/Quiz</a></li>
+            <li><a href="logout.php"><button>Logout</button></a></li>
         </ul>
     </nav>
     <div id="content_area">
