@@ -7,15 +7,24 @@ $db_name = "educationsystem";
 $db_user = "admin";
 $db_passwd = "admin";
 $db = new mysqli("localhost", $db_user, $db_passwd, $db_name);
-$user = "Myles"; //change to session user later
+$user = $_SESSION["username"];
 $MCindex = 0;
 $FIBindex = 0;
 $EssayIndex = 0;
 $AsToAdd = array();
 $title = $_POST["title"];
+$date = $_POST["date"];
+$dueHour = $_POST["dueHour"];
+$dueMin = $_POST["dueMin"];
+$dueAMPM = $_POST["ampm"];
 $examQuery = "INSERT INTO exam (title) VALUES ('$title')";
 $db->query($examQuery) or die("Database Error");
 $exam_id = $db->insert_id;
+if ($dueAMPM == "PM"){
+    $dueHour += 12;
+}
+$dueDateQuery = "insert into examdates (dueDate, exam_id) values ('$date $dueHour:$dueMin:00', $exam_id)";
+$db->query($dueDateQuery) or die("Database Error");
 if (isset($_POST["MCfq"])){
     $MCfq = $_POST["MCfq"];
     $MCq = $_POST["MCq"];

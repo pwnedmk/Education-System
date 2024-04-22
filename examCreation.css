@@ -55,3 +55,9 @@ body {
 .Del:hover {
     background-color: #8f0000b0;
 }
+.dateTime {
+    width: 30px;
+}
+.date {
+    width: 90px;
+}
