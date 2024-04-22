@@ -11,59 +11,57 @@
         <li><a href="admin.php">Home</a></li>
         <li><a href="studentlist1.php">Student List</a></li>
         <li><a href="teacherlist.php">Teacher List</a></li>
-        <li>Create NewUsers</li>
+        <li>Create New Users</li>
     </ul>
 </nav>
 <div id="list_area">
-    <table class="list-table">
-        <thead>
-        <tr>
-            <th width="70">Image</th>
-            <th width="500">Name</th>
-            <th width="150">Email</th>
-        </tr>
-        </thead>
-        <?php
-    
-        $servername = "localhost";
-        $username = "admin";
-        $password = "admin";
-        $dbname = "educationsystem";
+    <form action="delete_student.php" method="post">
+        <table class="list-table">
+            <thead>
+            <tr>
+                <th width="70">Image</th>
+                <th width="500">Name</th>
+                <th width="150">Email</th>
+                <th width="50">Select</th>
+            </tr>
+            </thead>
+            <?php
+            $servername = "localhost";
+            $username = "admin";
+            $password = "admin";
+            $dbname = "educationsystem";
 
-    
-        $conn = new mysqli($servername, $username, $password, $dbname);
+            $conn = new mysqli($servername, $username, $password, $dbname);
 
-        
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        
-        $sql = "SELECT name, email FROM login WHERE type = 'student'";
-        $result = $conn->query($sql);
-
-        
-        if ($result->num_rows > 0) {
-            echo '<tbody>';
-
-        
-            while($row = $result->fetch_assoc()) {
-                echo '<tr>';
-                echo '<td>Image</td>'; 
-                echo '<td>' . $row["name"] . '</td>'; 
-                echo '<td>' . $row["email"] . '</td>'; 
-                echo '</tr>';
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
             }
 
-            echo '</tbody>';
-        } else {
-            echo "<tbody><tr><td colspan='3'>No students found</td></tr></tbody>";
-        }
+            $sql = "SELECT name, email FROM login WHERE type = 'student'";
+            $result = $conn->query($sql);
 
-        
-        $conn->close();
-        ?>
-    </table>
+            if ($result->num_rows > 0) {
+                echo '<tbody>';
+
+                while($row = $result->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>Image</td>';
+                    echo '<td>' . $row["name"] . '</td>';
+                    echo '<td>' . $row["email"] . '</td>';
+                    echo '<td><input type="checkbox" name="selected_students[]" value="' . $row["email"] . '"></td>';
+                    echo '</tr>';
+                }
+
+                echo '</tbody>';
+            } else {
+                echo "<tbody><tr><td colspan='4'>No students found</td></tr></tbody>";
+            }
+
+            $conn->close();
+            ?>
+        </table>
+        <input type="submit" value="Delete Selected Students">
+    </form>
 </div>
 </body>
 </html>

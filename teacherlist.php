@@ -15,6 +15,7 @@
     </ul>
 </nav>
 <div id="list_area">
+<form action="delete_teacher.php" method="post">
     <table class="list-table">
         <thead>
         <tr>
@@ -52,6 +53,7 @@
                 echo '<td>Image</td>'; 
                 echo '<td>' . $row["name"] . '</td>'; 
                 echo '<td>' . $row["email"] . '</td>'; 
+                echo '<td><input type="checkbox" name="selected_teachers[]" value="' . $row["email"] . '"></td>';
                 echo '</tr>';
             }
 
@@ -64,6 +66,8 @@
         $conn->close();
         ?>
     </table>
+    <input type="submit" value="Delete Selected Teachers">
+    </form>
 </div>
 </body>
 </html>
