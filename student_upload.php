@@ -94,10 +94,10 @@ $conn->close();
     <nav id="menu_area">
         <ul>
             <li><a href="student_page.php">Home</a></li>
-            <li>Student List</li>
+            <li><a href="check_grades.php">Check Grade</a></li>
             <!-- <li><a href="student_upload.php">Create Assignment</a></li> -->
-            <li>Grade Assignment</li>
-            <li>Calendar</li>
+            <li><a href="takeExam.php?examID=29">Sample Test/Quiz</a></li>
+            <li><a href="logout.php"><button>Logout</button></a></li>
         </ul>
     </nav>
     <div class="container">

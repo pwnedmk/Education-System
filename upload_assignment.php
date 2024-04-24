@@ -55,7 +55,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
         echo "File Path: " . $targetPath . "\n";
 
         // Use prepared statement to prevent SQL injection
-        $sql = "INSERT INTO teacher_assignments (title, description, file_path, score) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO teacher_assignments (title, description, file_path, score, due_date) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
         if ($stmt === false) {
@@ -63,30 +63,12 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
             exit();
         }
 
-        $stmt->bind_param("sssi", $title, $description, $targetPath, $score);
+        $stmt->bind_param("sssis", $title, $description, $targetPath, $score, $due_date);
 
         if ($stmt->execute()) {
             echo "Assignment uploaded successfully and saved to teacher_assignments table\n";
             $assignmentId = $conn->insert_id;
-            
-            // Insert the due date into the assignmentdate table
-            $sqlDueDate = "INSERT INTO assignmentdate (assignment_id, due_date) VALUES (?, ?)";
-            $stmtDueDate = $conn->prepare($sqlDueDate);
-            
-            if ($stmtDueDate === false) {
-                echo "Error preparing due date statement: " . $conn->error . "\n";
-                exit();
-            }
-            
-            $stmtDueDate->bind_param("is", $assignmentId, $dueDate);
-            
-            if ($stmtDueDate->execute()) {
-                echo "Due date inserted successfully\n";
-            } else {
-                echo "Error inserting due date: " . $stmtDueDate->error . "\n";
-            }
-            
-            $stmtDueDate->close();
+
         } else {
             echo "Error inserting assignment: " . $stmt->error . "\n";
         }
@@ -113,11 +95,10 @@ $conn->close();
     <nav id="menu_area">
         <ul>
             <li><a href="teacher_page.php">Home</a></li>
-            <li><a href="studentlist.php">Student List</li>
-            <li><a href="upload_assignment.php?user_type=teacher">Create Assignment</a></li> 
+            <li><a href="studentlist.php">Student List</a></li>
+            <li><a href="upload_assignment.php?user_type=teacher">Create Assignment</a></li>
             <li><a href="exam.html">Create Test/Quiz</a></li>
-            <li>Grade Assignment</li>
-            <li>Calendar</li>
+            <li><a href="logout.php"><button>Logout</button></a></li>
         </ul>
     </nav>
     <div class="container">
