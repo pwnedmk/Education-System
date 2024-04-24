@@ -32,8 +32,7 @@ if ($result_student_id->num_rows == 0) {
 } 
 
 // Retrieve the list of assignments from the teacher_assignments table
-$sql_assignments = "SELECT teacher_assignments.id, teacher_assignments.title, teacher_assignments.file_path, due_date FROM teacher_assignments
-JOIN assignmentDate on teacher_assignments.id=assignmentDate.assignment_id";
+$sql_assignments = "SELECT  id, title, file_path, due_date FROM teacher_assignments";
 $result_assignments = $conn->query($sql_assignments);   
 
 $conn->close();
@@ -51,10 +50,8 @@ $conn->close();
     <nav id="menu_area">
         <ul>
             <li><a href="student_page.php">Home</a></li>
-            <li>View Assignment details</li>
-            <li>Check Grade</li>
+            <li><a href="check_grades.php">Check Grades</a></li>
             <!-- <li><a href="student_upload.php">upload assignment</a></li> -->
-            <li>Calendar</li>
             <li><a href="takeExam.php?examID=29">Sample Test/Quiz</a></li>
             <li><a href="logout.php"><button>Logout</button></a></li>
         </ul>
