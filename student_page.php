@@ -10,7 +10,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Retrieve the student ID based on the logged-in username
+// Connect to the database
 $servername = "localhost";
 $username = "admin";
 $password = "admin";
@@ -26,7 +26,6 @@ $sql_student_id = "SELECT id FROM login WHERE userID = '$logged_in_username'";
 $result_student_id = $conn->query($sql_student_id);
 
 if ($result_student_id->num_rows == 0) {
-    
     header("Location: login.php");
     exit(); 
 } 
@@ -45,6 +44,14 @@ $conn->close();
     <title>Student Page</title>
     <script src="javascript.js"></script>
     <link rel="stylesheet" type="text/css" href="test4.css">
+    <style>
+        /* CSS for truncating long titles */
+        .truncated-title {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
 </head>
 <body>
     <nav id="menu_area">
@@ -57,32 +64,36 @@ $conn->close();
         </ul>
     </nav>
     <div id="content_area">
-    <div id="list">
-        <h3 id="listHeader">Assignment List</h3>
-        <?php
-        if ($result_assignments->num_rows > 0) {
-            while ($row_assignment = $result_assignments->fetch_assoc()) {
-                $due_date = strtotime($row_assignment['due_date']);
-                $current_date = time();
-                if ($current_date <= $due_date) {
-                    echo "<p style='background-color: white, color: red;'><a href='student_upload.php?assignment_id=" . $row_assignment['id'] . "'>" . $row_assignment['title'] . "</a>";
-                    echo "<span style='margin-left: 10px;'>Due Date: " . $row_assignment['due_date'] . "</span>";
-                    echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a></hr>";
-                } else {
-                    echo "<p style='background-color: lightgray; color: black;'>Assignment Title:&nbsp;" . $row_assignment['title'];
-                    echo "<span style='margin-left: 10px;'>Due Date: " . $row_assignment['due_date'] . "</span>";
-                    echo "(Expired)";
-                    echo "</p>";
+        <div id="list">
+            <h3 id="listHeader">Assignment List</h3>
+            <?php
+            if ($result_assignments->num_rows > 0) {
+                while ($row_assignment = $result_assignments->fetch_assoc()) {
+                    // Truncate long titles
+                    $title = $row_assignment['title'];
+                    if (strlen($title) > 20) {
+                        $title = mb_substr($title, 0, 5, "utf-8") . ".....";
+                    }
+                    $due_date = strtotime($row_assignment['due_date']);
+                    $current_date = time();
+                    if ($current_date <= $due_date) {
+                        echo "<p style='background-color: white, color: red;'><a href='student_upload.php?assignment_id=" . $row_assignment['id'] . "'>" . $title . "</a>";
+                        echo "<span style='margin-left: 10px;'>Due Date: " . $row_assignment['due_date'] . "</span>";
+                        echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a></hr>";
+                    } else {
+                        echo "<p style='background-color: lightgray; color: black;'>Assignment Title:&nbsp;" . $title;
+                        echo "<span style='margin-left: 10px;'>Due Date: " . $row_assignment['due_date'] . "</span>";
+                        echo "(Expired)";
+                        echo "</p>";
+                    }
                 }
+            } else {
+                echo "<p>No assignments found</p>";
             }
-        } else {
-            echo "<p>No assignments found</p>";
-        }
+            ?>
+        </div>
+        <!-- Rest of the code remains the same -->
 
-        ?>
-    </div>
-    <!-- Rest of the code remains the same -->
-    
         <hr>
         <div id="horizontal_section">
             <div class="col1" id="calendar">
@@ -116,7 +127,6 @@ $conn->close();
                     <li>.</li>
                 </ul>
             </div>
-        </div>
         </div>
     </div>
 </body>
