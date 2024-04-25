@@ -30,9 +30,12 @@ if ($result_student_id->num_rows == 0) {
     exit(); 
 } 
 
-// Retrieve the list of assignments from the teacher_assignments table
-$sql_assignments = "SELECT ta.id, ta.title, ta.max_score, ss.score, ss.feedback FROM teacher_assignments ta JOIN student_submissions ss ON ss.assignment_id = ta.id";
-$result_assignments = $conn->query($sql_assignments);   
+$row_student_id = $result_student_id->fetch_assoc();
+$student_id = $row_student_id['id'];
+
+// Retrieve the list of assignments and feedback for the student
+$sql_assignments_feedback = "SELECT ta.id, ta.title, ta.max_score, ss.score, ss.feedback FROM teacher_assignments ta JOIN student_submissions ss ON ss.assignment_id = ta.id WHERE ss.student_id = $student_id";
+$result_assignments_feedback = $conn->query($sql_assignments_feedback);   
 
 $conn->close();
 ?>
@@ -59,11 +62,11 @@ $conn->close();
     <div id="list">
         <h3 id="listHeader">Grades</h3>
         <?php
-        if ($result_assignments->num_rows > 0) {
-            while ($row_assignment = $result_assignments->fetch_assoc()) {
-                echo "<p style='background-color: white, color: red;'> Assignment Title:&nbsp;" . $row_assignment['title'];
-                echo "<a>Score: " . $row_assignment['score'] . "&nbsp;/&nbsp;" . $row_assignment['max_score'] . "</a></hr>";
-                echo "<p><b>Feedback:</b> " . $row_assignment['feedback'] . "</p>";
+        if ($result_assignments_feedback->num_rows > 0) {
+            while ($row_assignment_feedback = $result_assignments_feedback->fetch_assoc()) {
+                echo "<p style='background-color: white, color: red;'> Assignment Title:&nbsp;" . $row_assignment_feedback['title'];
+                echo "<a>Score: " . $row_assignment_feedback['score'] . "&nbsp;/&nbsp;" . $row_assignment_feedback['max_score'] . "</a></hr>";
+                echo "<p><b>Feedback:</b> " . $row_assignment_feedback['feedback'] . "</p>";
                 echo "</p>";
             }
         } else {
