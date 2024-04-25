@@ -47,7 +47,7 @@ $conn->close();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student</title>
+    <title>Student Submissions</title>
     <link rel="stylesheet" type="text/css" href="test4.css">
 </head>
 <body>
