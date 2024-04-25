@@ -270,8 +270,47 @@ ALTER TABLE `questions`
 ALTER TABLE `student_submissions`
   ADD CONSTRAINT `student_submissions_ibfk_1` FOREIGN KEY (`assignment_id`) REFERENCES `teacher_assignments` (`id`),
   ADD CONSTRAINT `student_submissions_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `login` (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE TABLE `examdates` (
+  `examDateID` int(11) NOT NULL,
+  `dueDate` datetime DEFAULT NULL,
+  `exam_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `checkquestions` (
+  `question_id` int(11) NOT NULL,
+  `student_username` varchar(255) NOT NULL,
+  `exam_id` int(11) NOT NULL,
+  `currentGrade` int(11) DEFAULT NULL,
+  `graded` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `student_answers` (
+  `student_username` varchar(255) NOT NULL,
+  `exam_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `answer` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `checkquestions`
+  ADD PRIMARY KEY (`question_id`,`student_username`,`exam_id`);
+
+ALTER TABLE `examdates`
+  ADD PRIMARY KEY (`examDateID`);
+
+ALTER TABLE `student_answers`
+ADD PRIMARY KEY (`student_username`,`exam_id`,`question_id`),
+ADD KEY `exam_id` (`exam_id`),
+ADD KEY `question_id` (`question_id`);
+
+ALTER TABLE `examdates`
+  MODIFY `examDateID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+ALTER TABLE `student_answers`
+  ADD CONSTRAINT `student_answers_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`),
+  ADD CONSTRAINT `student_answers_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`);
+COMMIT;
