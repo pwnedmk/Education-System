@@ -37,31 +37,31 @@ $sql_assignments = "SELECT  id, title, file_path, due_date FROM teacher_assignme
 $result_assignments = $conn->query($sql_assignments);
 
 // Retrieve student scores data from the database
-$sql_scores = "SELECT score FROM student_submissions";
-$result_scores = $conn->query($sql_scores);
-
-$scores = array();
-while ($row_score = $result_scores->fetch_assoc()) {
-    $scores[] = $row_score['score'];
-}
+$query = "SELECT ss.score, ta.max_score FROM student_submissions ss JOIN teacher_assignments ta ON ss.assignment_id = ta.id WHERE ss.graded = 1";
+$result = $conn->query($query);
 
 // Count the number of scores in each range
-$scoreRanges = array(
-    '0-25' => 0,
-    '26-50' => 0,
-    '51-75' => 0,
-    '76-100' => 0
+$grades = array(
+    'A' => 0,
+    'B' => 0,
+    'C' => 0,
+    'D' => 0,
+    'Failing' => 0
 );
 
-foreach ($scores as $score) {
-    if ($score >= 0 && $score <= 25) {
-        $scoreRanges['0-25']++;
-    } elseif ($score >= 26 && $score <= 50) {
-        $scoreRanges['26-50']++;
-    } elseif ($score >= 51 && $score <= 75) {
-        $scoreRanges['51-75']++;
-    } elseif ($score >= 76 && $score <= 100) {
-        $scoreRanges['76-100']++;
+while ($row = $result->fetch_assoc()) {
+    $percentage = (double) $row['score'] / (double) $row['max_score'] * 100;
+
+    if ($percentage >= 90) {
+        $grades['A']++;
+    } else if ($percentage >= 80) {
+        $grades['B']++;
+    } else if ($percentage >= 70) {
+        $grades['C']++;
+    } else if ($percentage >= 60) {
+        $grades['D']++;
+    } else {
+        $grades['Failing']++;
     }
 }
 
@@ -159,10 +159,10 @@ $conn->close();
         var pieChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['0-25', '26-50', '51-75', '76-100'],
+                labels: ['A', 'B', 'C', 'D', 'Failing'],
                 datasets: [{
-                    data: [<?php echo implode(',', $scoreRanges); ?>],
-                    backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0']
+                    data: [<?php echo implode(',', $grades); ?>],
+                    backgroundColor: ['green', 'lime', 'yellow', 'orange', 'red']
                 }]
             },
             options: {
