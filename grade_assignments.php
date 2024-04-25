@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Assignment exists, update the score and feedback
         $sql_update_score = "UPDATE student_submissions SET score = ?, feedback = ?, graded = ? WHERE student_id = ? AND assignment_id = ?";
         $stmt = $conn->prepare($sql_update_score);
-        $stmt->bind_param("isii", $score, $feedback, $graded, $student_id, $assignment_id);
+        $stmt->bind_param("isiii", $score, $feedback, $graded, $student_id, $assignment_id);
         if ($stmt->execute()) {
             $notification_message = "Score and feedback updated for student ID $student_id on assignment ID $assignment_id.";
             file_put_contents("notifications.txt", $notification_message . PHP_EOL, FILE_APPEND);
