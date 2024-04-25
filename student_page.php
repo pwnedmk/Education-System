@@ -64,8 +64,7 @@ $conn->close();
             while ($row_assignment = $result_assignments->fetch_assoc()) {
                 echo "<p style='background-color: white, color: red;'><a href='student_upload.php?assignment_id=" . $row_assignment['id'] . "'>" . $row_assignment['title'] . "</a>";
                 echo "<span style='margin-left: 10px;'>Due Date: " . $row_assignment['due_date'] . "</span>";
-                echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a></hr>";
-                
+                echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a></hr>";    
                 echo "</p>";
             }
         } else {

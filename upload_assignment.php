@@ -22,6 +22,9 @@ if ($conn->connect_error) {
 $sql = "SELECT 1";
 $result = $conn->query($sql);
 
+$sql = "SELECT 1";
+$result = $conn->query($sql);
+
 if ($result !== false) {
     echo "Database connection successful.\n";
 } else {
@@ -45,17 +48,20 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
     if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetPath)) {
         $title = $_POST['title'];
         $description = $_POST['description'];
-        $dueDate = $_POST['due_date'];
+        $due_date = $_POST['due_date'];
         $score = $_POST['score'];
 
-        echo "Title: " . $title . "\n";
-        echo "Description: " . $description . "\n";
-        echo "Due Date: " . $dueDate . "\n";
-        echo "Score: " . $score . "\n";
-        echo "File Path: " . $targetPath . "\n";
+        $logMessage = "Teacher Submission - Title: " . $title . ""
+        . "Description: " . $description . " "
+        . "Due Date: " . $due_date . " "
+        . "Score: " . $score . " "
+        . "File Path: " . $targetPath . "\n";
+
+        // Append log message to notifications.txt
+        file_put_contents('notifications.txt', $logMessage, FILE_APPEND);
 
         // Use prepared statement to prevent SQL injection
-        $sql = "INSERT INTO teacher_assignments (title, description, file_path, score, due_date) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO teacher_assignments (title, description, file_path, max_score, due_date) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
         if ($stmt === false) {

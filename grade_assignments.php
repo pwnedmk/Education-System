@@ -27,7 +27,7 @@ $assignment_id = $_GET['assignment_id'];
 $student_id = $_GET['student_id'];
 $max_score;
 
-$sql_max_score = "SELECT score FROM teacher_assignments WHERE id = ?";
+$sql_max_score = "SELECT max_score FROM teacher_assignments WHERE id = ?";
 $stmt_max_score = $conn->prepare($sql_max_score);
 $stmt_max_score->bind_param("i", $assignment_id);
 $stmt_max_score->execute();
@@ -47,9 +47,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result_check_assignment->num_rows > 0) {
         // Assignment exists, update the score
+        $calculated_score = (double)$score / (double)$max_score;
         $sql_update_score = "UPDATE student_submissions SET score = ? WHERE student_id = ? AND assignment_id = ?";
         $stmt = $conn->prepare($sql_update_score);
-        $stmt->bind_param("iii", $score, $student_id, $assignment_id);
+        $stmt->bind_param("dii", $calculated_score, $student_id, $assignment_id);
         $stmt->execute();
         $stmt->close();
         echo "Score updated successfully!";

@@ -67,9 +67,9 @@ $conn->close();
             if ($result_assignments->num_rows > 0) {
                 while ($row_assignment = $result_assignments->fetch_assoc()) {
                     echo "<div class='assignment'>";
-                    echo "<p><a href='grade_assignments.php?assignment_id=" . $assignment_id . "&student_id=" . $row_assignment['student_id'] . "'>" . $row_assignment['name'] . "</a></p>";
-                    echo "<p>Submission Date: " . $row_assignment['submitted_at'] . "</p>";
-                    echo "<p><a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a></p>";
+                    echo "<p><a href='grade_assignments.php?assignment_id=" . $assignment_id . "&student_id=" . $row_assignment['student_id'] . "'>" . $row_assignment['name'] . "</a>";
+                    echo "Submission Date: " . $row_assignment['submitted_at'];
+                    echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a></p>";
                     echo "</div>";
                 }
             } else {

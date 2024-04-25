@@ -44,14 +44,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (move_uploaded_file($file_tmp, $file_path)) {
-        echo "Assignment ID: " . $assignment_id . "<br>";
-        echo "Student ID: " . $student_id . "<br>";
-        echo "File Path: " . $file_path . "<br>";
 
         // Use prepared statement to prevent SQL injection
         $sql = "INSERT INTO student_submissions (assignment_id, student_id, file_path) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         
+        $student_name_sql = "SELECT name FROM login WHERE student_id = " . $student_id;
+        $student_name = $conn->query($student_name_sql);
+        $student_name = $student_name->fetch_assoc();
         if ($stmt === false) {
             echo "Error preparing statement: " . $conn->error;
             exit();
@@ -59,6 +59,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $stmt->bind_param("iis", $assignment_id, $student_id, $file_path);
         if ($stmt->execute()) {
+            $logMessage = "Student Submission - Title: " . $title . ""
+            . "Description: " . $description . " "
+            . "Due Date: " . $due_date . " "
+            . "Score: " . $score . " "
+            . "File Path: " . $targetPath . "\n";
+
+            // Append log message to notifications.txt
+            file_put_contents('notifications.txt', $logMessage, FILE_APPEND);
             echo "Assignment submitted successfully.";
         } else {
             echo "Error submitting assignment: " . $stmt->error;
@@ -70,13 +78,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 }
-if (isset($_GET['assignment_id'])) {
-    $assignment_id = $_GET['assignment_id'];
-    echo "Assignment ID: " . $assignment_id;
-} else {
-    echo "Assignment ID not provided.";
-    exit();
-}
+// if (isset($_GET['assignment_id'])) {
+//     $assignment_id = $_GET['assignment_id'];
+//     echo "Assignment ID: " . $assignment_id;
+// } else {
+//     echo "Assignment ID not provided.";
+//     exit();
+// }
 
 
 $conn->close();
