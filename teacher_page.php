@@ -98,22 +98,26 @@ $conn->close();
     <div id="content_area">
         <div id="list">
             <h3 id="listHeader">Assignment List</h3>
-            <?php
-            if ($result_assignments->num_rows > 0) {
-                while ($row_assignment = $result_assignments->fetch_assoc()) {
-                    // Truncate long titles
-                    $title = $row_assignment['title'];
-                    if (strlen($title) > 20) {
-                        $title = mb_substr($title, 0, 5, "utf-8") . ".....";
-                    }
-                    echo "<p><a href='assignment_submissions.php?assignment_id=" . $row_assignment['id'] . "'>" . $title . "</a>";
-                    echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a>";
-                    echo "Due Date: " . $row_assignment['due_date'] . " </p>";
-                }
-            } else {
-                echo "<p>No assignments found</p>";
+            <form id="deleteForm" action="delete_assignments.php" method="post">
+    <?php
+    if ($result_assignments->num_rows > 0) {
+        while ($row_assignment = $result_assignments->fetch_assoc()) {
+            // Truncate long titles
+            $title = $row_assignment['title'];
+            if (strlen($title) > 20) {
+                $title = mb_substr($title, 0, 5, "utf-8") . ".....";
             }
-            ?>
+
+            echo "<a href='assignment_submissions.php?assignment_id=" . $row_assignment['id'] . "'>" . $title . "</a>";
+            echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>&nbsp&nbsp&nbspView Assignment</a>";
+            echo "Due Date: " . $row_assignment['due_date'] . " <input type='checkbox' name='delete_due_dates[]' value='" . $row_assignment['id'] . "'></p>";
+        }
+    } else {
+        echo "<p>No assignments found</p>";
+    }
+    ?>
+    <button class="delete" type="submit" name="delete_submit" onclick="return confirm('Are you sure you want to delete selected assignments?')">Delete Selected</button>
+</form>
         </div>
         <hr>
         <div id="horizontal_section">
