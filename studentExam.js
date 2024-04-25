@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log("Grade:" + grade);
                     const checkArray = responseData.checkQuestionIDs;
                     const queryToString = arrayToQueryString(checkArray);
-                    const baseURL = '/edusys4/gradeExam.php';
+                    const baseURL = '/educationsystem/gradeExam.php';
                     const fullURL = `${baseURL}?${queryToString}&grade=${grade}&examID=${examID}`;
                     alert("Test/quiz Submitted");
                     window.location.href = fullURL;

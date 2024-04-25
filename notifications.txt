@@ -26,3 +26,12 @@ Score and feedback updated for student ID 6 on assignment ID 11.
 Score and feedback updated for student ID 13 on assignment ID 12.
 Student Submission - Student 9999 (13) submitted assignment to assignment 13
 Score and feedback updated for student ID 13 on assignment ID 13.
+Score and feedback updated for student ID 4 on assignment ID 11.
+Score and feedback updated for student ID 13 on assignment ID 11.
+Score and feedback updated for student ID 13 on assignment ID 12.
+Exam 42 has been submittedd by qwer ().
+
+Student Submission - Student Jun (10) submitted assignment to assignment 13
+Score and feedback updated for student ID 10 on assignment ID 13.
+Student Submission - Student 1234 (9) submitted assignment to assignment 13
+Score and feedback updated for student ID 9 on assignment ID 13.
