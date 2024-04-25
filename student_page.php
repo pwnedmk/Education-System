@@ -59,7 +59,6 @@ $conn->close();
             <li><a href="student_page.php">Home</a></li>
             <li><a href="check_grades.php">Check Grades</a></li>
             <!-- <li><a href="student_upload.php">upload assignment</a></li> -->
-            <li><a href="takeExam.php?examID=29">Sample Test/Quiz</a></li>
             <li><a href="logout.php"><button>Logout</button></a></li>
         </ul>
     </nav>
@@ -118,7 +117,7 @@ $conn->close();
                 </div>
             </div>
             <div class="col2" id="none">
-                <img src="candy1.jpg" style="width:310px; height:260px;" alt="candy">
+                <img src="wsulogo.jpg" style="width:290px; height: 240px;" alt="candy">
             </div>
             <div class="col3" id="top_performer">
                 <ul>
