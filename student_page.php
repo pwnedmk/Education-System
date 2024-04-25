@@ -62,10 +62,18 @@ $conn->close();
         <?php
         if ($result_assignments->num_rows > 0) {
             while ($row_assignment = $result_assignments->fetch_assoc()) {
-                echo "<p style='background-color: white, color: red;'><a href='student_upload.php?assignment_id=" . $row_assignment['id'] . "'>" . $row_assignment['title'] . "</a>";
-                echo "<span style='margin-left: 10px;'>Due Date: " . $row_assignment['due_date'] . "</span>";
-                echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a></hr>";    
-                echo "</p>";
+                $due_date = strtotime($row_assignment['due_date']);
+                $current_date = time();
+                if ($current_date <= $due_date) {
+                    echo "<p style='background-color: white, color: red;'><a href='student_upload.php?assignment_id=" . $row_assignment['id'] . "'>" . $row_assignment['title'] . "</a>";
+                    echo "<span style='margin-left: 10px;'>Due Date: " . $row_assignment['due_date'] . "</span>";
+                    echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a></hr>";
+                } else {
+                    echo "<p style='background-color: lightgray; color: black;'>Assignment Title:&nbsp;" . $row_assignment['title'];
+                    echo "<span style='margin-left: 10px;'>Due Date: " . $row_assignment['due_date'] . "</span>";
+                    echo "(Expired)";
+                    echo "</p>";
+                }
             }
         } else {
             echo "<p>No assignments found</p>";
