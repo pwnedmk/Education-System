@@ -326,3 +326,9 @@ td{
     justify-content: center;
     padding: 1px;
 }
+button {
+    text-decoration: none;
+    color: white;
+    background-color: #3c3b3b;
+    
+}
