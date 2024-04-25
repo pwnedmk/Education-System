@@ -95,7 +95,7 @@ $conn->close();
                 <textarea id="feedback" name="feedback" style="width: 400px;height:138px;" required></textarea>
             </div>
             <div class="submit">
-                <input id="submit" type="submit" value="Upload Assignment" class="btn">
+                <input id="submit" type="submit" value="Upload Grade & Feedback" class="btn">
             </div>
         </form>
     </div>
