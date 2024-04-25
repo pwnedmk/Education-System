@@ -35,6 +35,9 @@ if ($result_student_id->num_rows == 0) {
 $sql_assignments = "SELECT  id, title, file_path, due_date FROM teacher_assignments";
 $result_assignments = $conn->query($sql_assignments);   
 
+//retrieve list of exams
+$examQuery = "Select exam_id, title, dueDate from exam from exam join examdates on exam.exam_id = examdates.exam_id";
+$examResults = $conn->query($examQuery);
 $conn->close();
 ?>
 
@@ -110,9 +113,26 @@ $conn->close();
             </div>
             <div class="col3" id="top_performer">
                 <ul>
-                    <li>.</li>
-                    <li></li>
-                    <li>.</li>
+                    <?php
+                    if ($examResults->num_rows > 0) {
+                        while ($examResult = $examResults->fetch_assoc()) {
+                            $due_date = strtotime($row_assignment['dueDate']);
+                            $current_date = time();
+                            if ($current_date <= $due_date) {
+                                echo "<p style='background-color: white, color: red;'><a href='student_upload.php?assignment_id=" . $examResult['exam_id'] . "'>" . $examResult['title'] . "</a>";
+                                echo "<span style='margin-left: 10px;'>Due Date: " . $examResult['dueDate'] . "</span>";
+                                echo "<a href='/education-system/takeExam.php?examID=" . $examResult['exam_id'] . "' target='_blank'>View Assignment</a></hr>";
+                            } else {
+                                echo "<p style='background-color: lightgray; color: black;'>Assignment Title:&nbsp;" . $examResult['title'];
+                                echo "<span style='margin-left: 10px;'>Due Date: " . $examResult['dueDate'] . "</span>";
+                                echo "(Expired)";
+                                echo "</p>";
+                                }
+                            }
+                    } else {
+                        echo "<p>No assignments found</p>";
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
