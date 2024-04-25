@@ -110,7 +110,7 @@ $conn->close();
             </div>
             <div class="col3" id="top_performer">
                 <ul>
-                    <li>.</li>
+                    <li>..</li>
                     <li></li>
                     <li>.</li>
                 </ul>
