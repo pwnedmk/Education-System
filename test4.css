@@ -70,6 +70,18 @@ a {
     border-style: solid;
     position: relative;
     margin-left: 25px;
+    overflow-y: auto;
+    
+}
+
+/*examlist */
+#examlist{
+    text-decoration: none;
+    color: crimson;
+    
+}
+.col3 p:hover {
+    background-color: #ff945a5f;
 }
 /* section calendar */
 .sec_cal {

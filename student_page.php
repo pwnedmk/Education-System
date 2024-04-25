@@ -130,7 +130,7 @@ $conn->close();
                             $due_date = strtotime($examResult['dueDate']);
                             $current_date = time();
                             if ($current_date <= $due_date) {
-                                echo "<p style='background-color: white, color: red;'><a href='takeExam.php?examID=" . $examResult['exam_id'] . "'>" . $examResult['title'] . "</a>";
+                                echo "<p style='background-color: white, color: red;'><a id= 'examlist' href='takeExam.php?examID=" . $examResult['exam_id'] . "'>" . $examResult['title'] . "</a>";
                                 echo "<span style='margin-left: 10px;'>Due Date: " . $examResult['dueDate'] . "</span>";
                                 echo "<a href='/education-system/takeExam.php?examID=" . $examResult['exam_id'] . "' target='_blank'>View Assignment</a></hr></p>";
                             } else {
