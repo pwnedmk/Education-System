@@ -22,7 +22,7 @@
 <!-- New User Form -->
 <div id="container-admin">
     <h2>Create New User</h2>
-    <form method="POST" action="admin_page.php">
+    <form method="POST" action="createNewuser.php">
         <div class="textbox">
             <label for="new_userID"></label>
             <input id="new_userID" type="text" name="new_userID" placeholder="Enter Username" required>
@@ -101,12 +101,8 @@ $db->close();
 ?>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var createUserBtn = document.getElementById('createUserBtn');
         var container = document.getElementById('container-admin');
-
-        createUserBtn.addEventListener('click', function() {
-            container.style.display = 'block';
-        });
+        container.style.display = 'block';
     });
 </script>
 </body>
