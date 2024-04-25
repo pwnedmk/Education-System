@@ -16,7 +16,8 @@
         <li><a href="logout.php"><button>Logout</button></a></li>
     </ul>
 </nav>
-<div>
+<div id="chart">
+    <h3>Overall Grade for Student</h3>
     <canvas id="myPieChart"></canvas>
     <script src="assignments_chart.js"></script>
 </div>

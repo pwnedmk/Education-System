@@ -445,3 +445,19 @@ button {
     margin-left: 620px;
     
   }
+  #chart h3{
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    color: black;
+    display: flex; 
+    justify-content:center;
+    box-shadow: 1px 4px 8px grey; 
+    border-radius: 7px;
+    opacity: 1;
+    margin-left: 100px;
+    
+  }
+  #myPieChart{
+    margin-left: 230px;
+  }
