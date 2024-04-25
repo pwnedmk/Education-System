@@ -4,4 +4,16 @@ Score and feedback updated for student ID 13 on assignment ID 11.
 Score and feedback updated for student ID 4 on assignment ID 11.
 Student Submission - Student Jung (6) submitted assignment to assignment 11
 Score and feedback updated for student ID 6 on assignment ID 11.
-Teacher Assignment Upload - Title: HW34
+Teacher Assignment Upload - Title: HW34Teacher Assignment Upload - Title: Assignment 1Teacher Assignment Upload - Title: Assignment 2Teacher Assignment Upload - Title: Assignment 3Teacher Assignment Upload - Title: Assignment 4Teacher Assignment Upload - Title: Assignment 5
+Student Submission - Student Jun (10) submitted assignment to assignment 18
+Student Submission - Student Jun (10) submitted assignment to assignment 19
+Student Submission - Student Jun (10) submitted assignment to assignment 20
+Student Submission - Student 1234 (12) submitted assignment to assignment 18
+Student Submission - Student 1234 (12) submitted assignment to assignment 19
+Student Submission - Student 1234 (12) submitted assignment to assignment 20
+Score and feedback updated for student ID 10 on assignment ID 18.
+Score and feedback updated for student ID 12 on assignment ID 18.
+Score and feedback updated for student ID 10 on assignment ID 19.
+Score and feedback updated for student ID 12 on assignment ID 19.
+Score and feedback updated for student ID 10 on assignment ID 20.
+Score and feedback updated for student ID 12 on assignment ID 20.
