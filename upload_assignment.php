@@ -41,8 +41,19 @@ if (!is_dir($targetDir) || !is_writable($targetDir)) {
 }
 
 if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
-    $fileName = basename($_FILES['file']["name"]);
+    $originalFileName = basename($_FILES['file']["name"]);
+    $extension = pathinfo($originalFileName, PATHINFO_EXTENSION);
+    $baseName = pathinfo($originalFileName, PATHINFO_FILENAME);
+    $counter = 1;
+    $fileName = $originalFileName;
     $targetPath = $targetDir . $fileName;
+
+    // Check and modify the filename if it already exists in the directory
+    while (file_exists($targetPath)) {
+        $fileName = $baseName . "(" . $counter . ")." . $extension;
+        $targetPath = $targetDir . $fileName;
+        $counter++;
+    }
 
     // Moving the file to target path
     if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetPath)) {
@@ -51,11 +62,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
         $due_date = $_POST['due_date'];
         $score = $_POST['score'];
 
-        $logMessage = "Teacher Submission - Title: " . $title . ""
-        . "Description: " . $description . " "
-        . "Due Date: " . $due_date . " "
-        . "Score: " . $score . " "
-        . "File Path: " . $targetPath . "\n";
+        $logMessage = "Teacher Assignment Upload - Title: " . $title . "";
 
         // Append log message to notifications.txt
         file_put_contents('notifications.txt', $logMessage, FILE_APPEND);
