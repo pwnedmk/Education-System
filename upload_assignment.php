@@ -62,7 +62,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
         $due_date = $_POST['due_date'];
         $score = $_POST['score'];
 
-        $logMessage = "Teacher Assignment Upload - Title: " . $title . "";
+        $logMessage = "Teacher Assignment Upload - Title: " . $title . "\n";
 
         // Append log message to notifications.txt
         file_put_contents('notifications.txt', $logMessage, FILE_APPEND);
