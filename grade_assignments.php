@@ -48,10 +48,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result_check_assignment->num_rows > 0) {
         // Assignment exists, update the score and feedback
-        $calculated_score = (double)$score / (double)$max_score;
         $sql_update_score = "UPDATE student_submissions SET score = ?, feedback = ? WHERE student_id = ? AND assignment_id = ?";
         $stmt = $conn->prepare($sql_update_score);
-        $stmt->bind_param("dsii", $calculated_score, $feedback, $student_id, $assignment_id);
+        $stmt->bind_param("dsii", $score, $feedback, $student_id, $assignment_id);
         $stmt->execute();
         $stmt->close();
         
