@@ -159,7 +159,7 @@ $conn->close();
         var pieChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['0-25', '26-50', '51-75', '76-100'],
+                labels: ['A', 'B', 'C', 'D', 'Failing'],
                 datasets: [{
                     data: [<?php echo implode(',', $grades); ?>],
                     backgroundColor: ['green', 'lime', 'yellow', 'orange', 'red']
