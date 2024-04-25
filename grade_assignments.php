@@ -22,7 +22,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Retrieve asignment and student id from array
+// Retrieve assignment and student id from array
 $assignment_id = $_GET['assignment_id'];
 $student_id = $_GET['student_id'];
 $max_score;
@@ -38,6 +38,7 @@ $stmt_max_score->close();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $score = $_POST['score'];
+    $feedback = $_POST['feedback'];
     $assignment_id = $_GET['assignment_id'];
     $student_id = $_GET['student_id'];
 
@@ -46,14 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result_check_assignment = $conn->query($sql_check_assignment);
 
     if ($result_check_assignment->num_rows > 0) {
-        // Assignment exists, update the score
+        // Assignment exists, update the score and feedback
         $calculated_score = (double)$score / (double)$max_score;
-        $sql_update_score = "UPDATE student_submissions SET score = ? WHERE student_id = ? AND assignment_id = ?";
+        $sql_update_score = "UPDATE student_submissions SET score = ?, feedback = ? WHERE student_id = ? AND assignment_id = ?";
         $stmt = $conn->prepare($sql_update_score);
-        $stmt->bind_param("dii", $calculated_score, $student_id, $assignment_id);
+        $stmt->bind_param("dsii", $calculated_score, $feedback, $student_id, $assignment_id);
         $stmt->execute();
         $stmt->close();
-        echo "Score updated successfully!";
+        echo "Score and feedback updated successfully!";
     } else {
         echo "Assignment not found for the student.";
     }
@@ -82,14 +83,19 @@ $conn->close();
     <div class="container">
         <h2 id="h2">Input Score</h2>
         <form method="POST" action="" enctype="multipart/form-data" class="upload-form">
-                <div class="form-group">
-                    <label for="score">Score: </label>
-                    <input type="number" name="score" id="score" required>
-                    <?php echo "<span class='score-info'>&nbsp;/&nbsp;$max_score</span>"; ?>
-                </div>
+            <div class="form-group">
+                <label id="score" for="score">Score: </label>
+                <input type="number" name="score" id="score" required>
+                <?php echo "<span class='score-info'>&nbsp;/&nbsp;$max_score</span>"; ?>
+            </div>
+            <div class="form-group">
+                <label for="feedback">Feedback:</label>
+                <textarea id="feedback" name="feedback" style="width: 400px;height:138px;" required></textarea>
+            </div>
             <div class="submit">
-            <input id="submit" type="submit" value="Upload Assignment" class="btn">
+                <input id="submit" type="submit" value="Upload Assignment" class="btn">
             </div>
         </form>
+    </div>
 </body>
 </html>
