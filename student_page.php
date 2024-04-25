@@ -42,7 +42,7 @@ $conn->close();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>student</title>
+    <title>Student Page</title>
     <script src="javascript.js"></script>
     <link rel="stylesheet" type="text/css" href="test4.css">
 </head>

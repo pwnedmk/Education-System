@@ -35,7 +35,35 @@ if ($conn->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $file_name = $_FILES["file"]["name"];
     $file_tmp = $_FILES["file"]["tmp_name"];
-    $file_path = "upload_stu/" . $file_name;
+
+    $targetDir = "upload_stu/";
+    $extension = pathinfo($file_name, PATHINFO_EXTENSION);
+    $baseName = pathinfo($file_name, PATHINFO_FILENAME);
+    $counter = 1;
+
+    // Construct the target path with directory
+    $file_path = $targetDir . $file_name;
+
+    // Check if the file already exists in the database
+    while (true) {
+        $checkFileSql = "SELECT file_path FROM student_submissions WHERE file_path = ?";
+        $fileStmt = $conn->prepare($checkFileSql);
+        $fileStmt->bind_param("s", $file_path);
+        $fileStmt->execute();
+        $fileStmt->store_result();
+
+        if ($fileStmt->num_rows == 0) {
+            // File name is unique
+            $fileStmt->close();
+            break;
+        } else {
+            // File exists, modify the filename
+            $file_name = $baseName . "(" . $counter . ")." . $extension;
+            $file_path = $targetDir . $file_name;  // Make sure to update the $file_path with the new $file_name
+            $counter++;
+            $fileStmt->close();
+        }
+    }   
 
     // Check if the directory exists and is writable
     if (!is_dir("upload_stu") || !is_writable("upload_stu")) {
@@ -45,19 +73,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (move_uploaded_file($file_tmp, $file_path)) {
 
-        // Use prepared statement to prevent SQL injection
-        $sql = "INSERT INTO student_submissions (assignment_id, student_id, file_path) VALUES (?, ?, ?)";
+        // Check if the assignment has already been submitted by this student
+        $checkSql = "SELECT * FROM student_submissions WHERE assignment_id = ? AND student_id = ?";
+        $checkStmt = $conn->prepare($checkSql);
+        $checkStmt->bind_param("ii", $assignment_id, $student_id);
+        $checkStmt->execute();
+        $result = $checkStmt->get_result();
+        $already_submitted = $result->num_rows > 0;
+        $checkStmt->close();
+
+        if ($already_submitted) {
+            // Update existing submission
+            $sql = "UPDATE student_submissions SET file_path = ? WHERE assignment_id = ? AND student_id = ?";
+        } else {
+            // Insert new submission
+            $sql = "INSERT INTO student_submissions (assignment_id, student_id, file_path) VALUES (?, ?, ?)";
+        }
+
         $stmt = $conn->prepare($sql);
         
         $student_name_sql = "SELECT name FROM login WHERE id = " . $student_id;
         $student_name = $conn->query($student_name_sql);
         $student_name = $student_name->fetch_assoc();
+
         if ($stmt === false) {
             echo "Error preparing statement: " . $conn->error;
             exit();
         }
         
-        $stmt->bind_param("iis", $assignment_id, $student_id, $file_path);
+        if ($already_submitted) {
+            $stmt->bind_param("sii", $file_path, $assignment_id, $student_id);
+        } else {
+            $stmt->bind_param("iis", $assignment_id, $student_id, $file_path);
+        }
+
         if ($stmt->execute()) {
             $logMessage = "Student Submission - Student " . $student_name['name'] . " (" . $student_id .") submitted assignment to assignment " . $assignment_id . "\n";
 
@@ -91,7 +140,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     
-    <title>Upload Assignment</title>
+    <title>Student Upload</title>
     <link rel="stylesheet" type="text/css" href="test4.css">
 </head>
 <body>
