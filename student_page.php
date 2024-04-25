@@ -39,7 +39,7 @@ $examQuery = "Select exam.exam_id, title, dueDate from exam join examdates on ex
 $examResults = $conn->query($examQuery);
 $conn->close();
 ?>
-
+<br>
 <!DOCTYPE html>
 <html lang="en">
 <head>
