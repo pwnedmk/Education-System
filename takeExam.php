@@ -38,8 +38,10 @@
         }
 
     </style>
+    <script src="studentExam.js"></script>
 </head>
 <body>
+<div id="qContainer">
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -65,8 +67,8 @@ $index = 0;
 foreach ($exam as $row) {
     $type = $row['type'];
     $question = $row['question'];
+    $questionId = $row['question_id'];
     if ($type == "MC"){
-        $questionId = $row['question_id'];
         $answersQuery = "select answer from answers where question_id = $questionId";
         $MCanswers = $db->query($answersQuery);
         if ($MCanswers->num_rows > 0) {
@@ -78,30 +80,32 @@ foreach ($exam as $row) {
         echo "<div class='qnas'>" . $question . "
         <br><br>
         <label for='" . $type . $index . "a'>A</label>
-        <input type='radio' id='" . $type . $index . "a' name='" . $type . "a[" . $index . "]' value='1'>
+        <input type='radio' id='" . $type . $index . "a' name='{$type}_{$index}_{$questionId}' value='1'>
         <span>" . $answers[0] . "</span><br>
         <label for='" . $type . $index . "b'>B</label>
-        <input type='radio' id='" . $type . $index . "b' name='" . $type . "a[" . $index . "]' value='2'>
+        <input type='radio' id='" . $type . $index . "b' name='{$type}_{$index}_{$questionId}' value='2'>
         <span>" . $answers[1] . "</span><br>
         <label for='" . $type . $index . "c'>C</label>
-        <input type='radio' id='" . $type . $index . "c' name='" . $type . "a[" . $index . "]' value='3'>
+        <input type='radio' id='" . $type . $index . "c' name='{$type}_{$index}_{$questionId}' value='3'>
         <span>" . $answers[2] . "</span><br>
         <label for='" . $type . $index . "d'>D</label>
-        <input type='radio' id='" . $type . $index . "d' name='" . $type . "a[" . $index . "]' value='4'>
+        <input type='radio' id='" . $type . $index . "d' name='{$type}_{$index}_{$questionId}' value='4'>
         <span>" . $answers[3] . "</span><br>
         </div><br>";
     }
     else if ($type == "FI"){
         echo "<div class='qnas'>$question
-        <br><br><input type='text' name='" . $type . "a[" . $index . "]' placeholder='Enter an Answer'></div><br><br>";
+        <br><br><input type='text' name='{$type}_{$index}_{$questionId}' placeholder='Enter an answer'></div><br>";
     }
     else {
         echo "<div class='qnas'>$question
-        <br><br><input type='text' name='" . $type . "a[" . $index . "]' placeholder='Enter an Answer'></div><br><br>";
+        <br><br><input type='text' name='{$type}_{$index}_{$questionId}' placeholder='Enter an Answer'></div><br><br>";
     }
     $index++;
 }
 ?>
-<button class="submit" id="submit">Submit</button>
+</div>
+<button class="submit" id="submitS" exam-id="<?php echo $examID; ?>">Submit</button>
+<div id="error"></div>
 </body>
 </html>
