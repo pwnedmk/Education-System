@@ -22,7 +22,7 @@
 <!-- New User Form -->
 <div id="container-admin">
     <h2>Create New User</h2>
-    <form method="POST" action="createNewuser.php">
+    <form method="POST">
         <div class="textbox">
             <label for="new_userID"></label>
             <input id="new_userID" type="text" name="new_userID" placeholder="Enter Username" required>
@@ -42,8 +42,9 @@
         <div>
             <label for="userType">User Type:</label>
             <select id="userType" name="userType" required>
-                <option value="teacher">Teacher</option>
                 <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="admin">Admin</option>
             </select>
             
             <button id="create" type="submit" name="submitNewUser">Create</button>
@@ -82,16 +83,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $type = $_POST["userType"]; 
 
             
-            $sql = "INSERT INTO login (userID, password, type, name, email) VALUES ('$user', '$pass', '$type', '$name', '$email')";
-
+            $sql = "INSERT INTO login (userID, password, type, name, email) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $db->prepare($sql);
             
-            if ($db->query($sql) === TRUE) {
+            if ($stmt === false) {
+                echo "Error preparing statement: " . $db->error . "\n";
+                exit();
+            }
+    
+            $stmt->bind_param("sssss", $user, $pass, $type, $name, $email);
+    
+            if ($stmt->execute()) {
                 echo "new user created.";
             } else {
                 echo "error: " . $sql . "<br>" . $db->error;
             }
-        } else {
-            echo ".";
+    
+            $stmt->close();
+            exit();
         }
     }
 }
@@ -101,8 +110,12 @@ $db->close();
 ?>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        var createUserBtn = document.getElementById('createUserBtn');
         var container = document.getElementById('container-admin');
-        container.style.display = 'block';
+
+        createUserBtn.addEventListener('click', function() {
+            container.style.display = 'block';
+        });
     });
 </script>
 </body>
