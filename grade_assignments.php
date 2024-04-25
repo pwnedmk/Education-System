@@ -54,7 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("dsii", $calculated_score, $feedback, $student_id, $assignment_id);
         $stmt->execute();
         $stmt->close();
-        echo "Score and feedback updated successfully!";
+        
+        $notification_message = "Score and feedback updated for student ID $student_id on assignment ID $assignment_id.";
+        file_put_contents("notifications.txt", $notification_message . PHP_EOL, FILE_APPEND);
+        echo "Update successful.";
     } else {
         echo "Assignment not found for the student.";
     }
@@ -67,7 +70,7 @@ $conn->close();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student</title>
+    <title>Grade Assignment</title>
     <link rel="stylesheet" type="text/css" href="test4.css">
 </head>
 <body>
