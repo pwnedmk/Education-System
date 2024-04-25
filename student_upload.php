@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO student_submissions (assignment_id, student_id, file_path) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         
-        $student_name_sql = "SELECT name FROM login WHERE student_id = " . $student_id;
+        $student_name_sql = "SELECT name FROM login WHERE id = " . $student_id;
         $student_name = $conn->query($student_name_sql);
         $student_name = $student_name->fetch_assoc();
         if ($stmt === false) {
@@ -59,11 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $stmt->bind_param("iis", $assignment_id, $student_id, $file_path);
         if ($stmt->execute()) {
-            $logMessage = "Student Submission - Title: " . $title . ""
-            . "Description: " . $description . " "
-            . "Due Date: " . $due_date . " "
-            . "Score: " . $score . " "
-            . "File Path: " . $targetPath . "\n";
+            $logMessage = "Student Submission - Student " . $student_name['name'] . " (" . $student_id .") submitted assignment to assignment " . $assignment_id . "\n";
 
             // Append log message to notifications.txt
             file_put_contents('notifications.txt', $logMessage, FILE_APPEND);
@@ -111,7 +107,7 @@ $conn->close();
     <div class="container">
     <?php if (isset($assignment_id)): ?>
     <div class="container"> 
-        <h2 id="h2-stu">Upload Assignment</h2>
+        <h2 id="h2-stu">Submit Assignment</h2>
         <form method="POST" action="" enctype="multipart/form-data" class="upload-form">
             <div class="form-group">
                 <label id= ags_stu for="file">Assignment File:</label>
