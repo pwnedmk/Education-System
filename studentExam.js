@@ -21,11 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                     // send to home or pop up box
                     //document.getElementById("error").insertAdjacentHTML("beforeend", xhr.responseText);
-                    console.log(xhr.responseText);
                     const responseData = JSON.parse(xhr.responseText);
                     const grade = responseData.grade;
+                    console.log("Grade:" + grade);
                     const checkArray = responseData.checkQuestionIDs;
-                    console.log(checkArray);
                     const queryToString = arrayToQueryString(checkArray);
                     const baseURL = '/edusys4/gradeExam.php';
                     const fullURL = `${baseURL}?${queryToString}&grade=${grade}&examID=${examID}`;
