@@ -330,5 +330,119 @@ button {
     text-decoration: none;
     color: white;
     background-color: #3c3b3b;
-    
+
 }
+
+/*create new user*/
+.login-box {
+    width: 280px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #191970;
+}
+ 
+.login-box h1 {
+    float: left;
+    font-size: 40px;
+    border-bottom: 4px solid #191970;
+    margin-bottom: 50px;
+    padding: 13px;
+}
+ 
+.textbox {
+    width: 100%;
+    overflow: hidden;
+    font-size: 20px;
+    padding: 8px 0;
+    margin: 8px 0;
+    border-bottom: 1px solid #191970;
+}
+ 
+.fa {
+    width: px;
+    float: left;
+    text-align: center;
+}
+ 
+.textbox input {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 18px;
+    float: left;
+    margin: 0 10px;
+}
+ 
+.button {
+    width: 100%;
+    padding: 8px;
+    color: #ffffff;
+    background: none #191970;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 12px 0;
+}
+
+.fa-user, .fa-lock {
+    transform: translateY(2.5px);
+}
+
+#message {
+    display:none;
+    background: #f1f1f1;
+    color: #000;
+    position: absolute;
+    transform: translateX(30%);
+    transform: translateY(50%);
+    padding: 20px;
+    margin-top: 10px;
+    width: 280px;
+  }
+  
+  #message p {
+    padding: 10px 35px;
+    font-size: 18px;
+  }
+  
+  .valid {
+    color: green;
+  }
+  
+  .valid:before {
+    position: relative;
+    left: -35px;
+    content: "\2713";
+  }
+  
+  /* Add a red text color and an "x" icon when the requirements are wrong */
+  .invalid {
+    color: red;
+  }
+  
+  .invalid:before {
+    position: relative;
+    left: -35px;
+    content: "\2716";
+  }
+
+  .wrapper {
+    display: flex;
+  }
+  #container-admin {
+    position: relative;
+    left: 50%;
+    margin-left: 300px;
+    margin-top: 200px;
+    transform: translate(-50%, -50%);
+  }
+  #create {
+    margin-left: 20px;
+  }
+  #delete {
+    margin-left: 620px;
+    
+  }
