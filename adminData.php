@@ -16,7 +16,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$query = "SELECT ss.score, ta.max_score FROM student_submissions ss JOIN teacher_assignments ta ON ss.assignment_id = ta.id WHERE ss.graded = 0";
+$query = "SELECT ss.score, ta.max_score FROM student_submissions ss JOIN teacher_assignments ta ON ss.assignment_id = ta.id WHERE ss.graded = 1";
 $result = $conn->query($query);
 
 $grades = [

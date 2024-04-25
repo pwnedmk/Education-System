@@ -41,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $feedback = $_POST['feedback'];
     $assignment_id = $_GET['assignment_id'];
     $student_id = $_GET['student_id'];
+    $graded = 1;
 
     // Check if the assignment exists for the student
     $sql_check_assignment = "SELECT * FROM student_submissions WHERE student_id = $student_id AND assignment_id = $assignment_id";
@@ -48,9 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result_check_assignment->num_rows > 0) {
         // Assignment exists, update the score and feedback
-        $sql_update_score = "UPDATE student_submissions SET score = ?, feedback = ? WHERE student_id = ? AND assignment_id = ?";
+        $sql_update_score = "UPDATE student_submissions SET score = ?, feedback = ?, graded = ? WHERE student_id = ? AND assignment_id = ?";
         $stmt = $conn->prepare($sql_update_score);
-        $stmt->bind_param("isii", $score, $feedback, $student_id, $assignment_id);
+        $stmt->bind_param("isii", $score, $feedback, $graded, $student_id, $assignment_id);
         if ($stmt->execute()) {
             $notification_message = "Score and feedback updated for student ID $student_id on assignment ID $assignment_id.";
             file_put_contents("notifications.txt", $notification_message . PHP_EOL, FILE_APPEND);
@@ -71,7 +72,7 @@ $conn->close();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student</title>
+    <title>Grading Assignments</title>
     <link rel="stylesheet" type="text/css" href="test4.css">
 </head>
 <body>

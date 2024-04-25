@@ -72,7 +72,7 @@ $conn->close();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>test</title>
+    <title>Teacher Page</title>
     <script src="javascript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" type="text/css" href="test4.css">
