@@ -76,6 +76,14 @@ $conn->close();
     <script src="javascript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" type="text/css" href="test4.css">
+    <style>
+        /* CSS for truncating long titles */
+        .truncated-title {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
 </head>
 <body>
     <nav id="menu_area">
@@ -93,7 +101,12 @@ $conn->close();
             <?php
             if ($result_assignments->num_rows > 0) {
                 while ($row_assignment = $result_assignments->fetch_assoc()) {
-                    echo "<p><a href='assignment_submissions.php?assignment_id=" . $row_assignment['id'] . "'>" . $row_assignment['title'] . "</a>";
+                    // Truncate long titles
+                    $title = $row_assignment['title'];
+                    if (strlen($title) > 20) {
+                        $title = mb_substr($title, 0, 5, "utf-8") . ".....";
+                    }
+                    echo "<p><a href='assignment_submissions.php?assignment_id=" . $row_assignment['id'] . "'>" . $title . "</a>";
                     echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a>";
                     echo "Due Date: " . $row_assignment['due_date'] . " </p>";
                 }
