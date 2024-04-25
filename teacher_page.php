@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -37,6 +36,35 @@ if ($result_teacher_id->num_rows == 0) {
 $sql_assignments = "SELECT  id, title, file_path, due_date FROM teacher_assignments";
 $result_assignments = $conn->query($sql_assignments);
 
+// Retrieve student scores data from the database
+$sql_scores = "SELECT score FROM student_submissions";
+$result_scores = $conn->query($sql_scores);
+
+$scores = array();
+while ($row_score = $result_scores->fetch_assoc()) {
+    $scores[] = $row_score['score'];
+}
+
+// Count the number of scores in each range
+$scoreRanges = array(
+    '0-25' => 0,
+    '26-50' => 0,
+    '51-75' => 0,
+    '76-100' => 0
+);
+
+foreach ($scores as $score) {
+    if ($score >= 0 && $score <= 25) {
+        $scoreRanges['0-25']++;
+    } elseif ($score >= 26 && $score <= 50) {
+        $scoreRanges['26-50']++;
+    } elseif ($score >= 51 && $score <= 75) {
+        $scoreRanges['51-75']++;
+    } elseif ($score >= 76 && $score <= 100) {
+        $scoreRanges['76-100']++;
+    }
+}
+
 $conn->close();
 ?>
 
@@ -46,6 +74,7 @@ $conn->close();
     <meta charset="UTF-8">
     <title>test</title>
     <script src="javascript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" type="text/css" href="test4.css">
 </head>
 <body>
@@ -59,15 +88,14 @@ $conn->close();
         </ul>
     </nav>
     <div id="content_area">
-    <div id="list">
+        <div id="list">
             <h3 id="listHeader">Assignment List</h3>
             <?php
             if ($result_assignments->num_rows > 0) {
                 while ($row_assignment = $result_assignments->fetch_assoc()) {
                     echo "<p><a href='assignment_submissions.php?assignment_id=" . $row_assignment['id'] . "'>" . $row_assignment['title'] . "</a>";
                     echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a>";
-                    echo "Due Date: " . $row_assignment['due_date']. " </p>";
-                    
+                    echo "Due Date: " . $row_assignment['due_date'] . " </p>";
                 }
             } else {
                 echo "<p>No assignments found</p>";
@@ -76,7 +104,7 @@ $conn->close();
         </div>
         <hr>
         <div id="horizontal_section">
-        <div class="col1" id="calendar">
+            <div class="col1" id="calendar">
                 <div class="sec_cal">
                     <div class="cal_nav">
                         <a href="javascript:;" class="nav-btn go-prev">prev</a>
@@ -98,11 +126,7 @@ $conn->close();
                 </div>
             </div>
             <div class="col2" id="none">
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+                <canvas id="scorePieChart"></canvas>
             </div>
             <div class="col3" id="top_performer">
                 <ul>
@@ -112,6 +136,30 @@ $conn->close();
                 </ul>
             </div>
         </div>
-</div>
+    </div>
+
+    <script>
+        // Get the canvas element
+        var ctx = document.getElementById('scorePieChart').getContext('2d');
+
+        // Create the pie chart
+        var pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['0-25', '26-50', '51-75', '76-100'],
+                datasets: [{
+                    data: [<?php echo implode(',', $scoreRanges); ?>],
+                    backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0']
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Student Score Distribution'
+                }
+            }
+        });
+    </script>
 </body>
 </html>
