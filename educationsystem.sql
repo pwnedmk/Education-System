@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 25, 2024 at 01:54 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Apr 25, 2024 at 05:40 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -86,7 +86,8 @@ INSERT INTO `login` (`id`, `userID`, `password`, `type`, `name`, `email`) VALUES
 (19, 'ndever34', 'Password1234!', 'student', 'Nicholas', 'nd@gmail.com'),
 (20, 'testUser', 'pass', 'student', 'Test', 'Test@email.com'),
 (21, 'ndever01', 'abc123!lA', 'student', 'Nicholas', 'nd@gmails.com'),
-(22, 'ndevT', 'Password123!', 'teacher', 'Teach Nick', 'teacher@gmail.com');
+(22, 'ndevT', 'Password123!', 'teacher', 'Teach Nick', 'teacher@gmail.com'),
+(27, 'admin', 'Adm!n123', 'admin', 'IamAdmin', 'admin@yahoo.com');
 
 -- --------------------------------------------------------
 
@@ -127,15 +128,18 @@ CREATE TABLE `student_submissions` (
   `student_id` int(11) NOT NULL,
   `file_path` varchar(255) NOT NULL,
   `submitted_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `score` int(11) NOT NULL DEFAULT 0
+  `score` int(11) NOT NULL DEFAULT 0,
+  `feedback` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `student_submissions`
 --
 
-INSERT INTO `student_submissions` (`id`, `assignment_id`, `student_id`, `file_path`, `submitted_at`, `score`) VALUES
-(17, 11, 4, 'upload_stu/CS435_Homework_5.docx', '2024-04-24 16:19:09', 45);
+INSERT INTO `student_submissions` (`id`, `assignment_id`, `student_id`, `file_path`, `submitted_at`, `score`, `feedback`) VALUES
+(17, 11, 4, 'upload_stu/CS435_Homework_5.docx', '2024-04-24 16:19:09', 45, ''),
+(18, 11, 13, 'upload_stu/test.docx', '2024-04-25 02:19:14', 0, 'Hello'),
+(19, 12, 13, 'upload_stu/Screenshot 2024-04-20 at 9.28.56 PM(1).png', '2024-04-25 03:32:05', 1, 'Nick is good guy just kidding.');
 
 -- --------------------------------------------------------
 
@@ -157,7 +161,8 @@ CREATE TABLE `teacher_assignments` (
 --
 
 INSERT INTO `teacher_assignments` (`id`, `title`, `description`, `file_path`, `max_score`, `due_date`) VALUES
-(11, 'asdf', 'asdf', 'uploads/CS435_Homework_6.pdf', 50, '2024-04-24 16:17:58');
+(11, 'asdf', 'asdf', 'uploads/CS435_Homework_6.pdf', 50, '2024-04-24 16:17:58'),
+(12, 'Hw02', 'FNSS', 'uploads/candy1.jpg', 100, '2024-04-25 00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -223,7 +228,7 @@ ALTER TABLE `exam`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `questions`
@@ -235,13 +240,13 @@ ALTER TABLE `questions`
 -- AUTO_INCREMENT for table `student_submissions`
 --
 ALTER TABLE `student_submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `teacher_assignments`
 --
 ALTER TABLE `teacher_assignments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
