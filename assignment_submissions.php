@@ -40,6 +40,33 @@ $sql_assignments = "SELECT student_submissions.id, student_id, file_path, submit
 WHERE assignment_id = " . $assignment_id ;
 $result_assignments = $conn->query($sql_assignments);
 
+$query = "SELECT ss.score, ta.max_score FROM student_submissions ss JOIN teacher_assignments ta ON ss.assignment_id = ta.id WHERE ss.graded = 1 AND ss.assignment_id = " . $assignment_id;
+$result = $conn->query($query);
+
+$grades = [
+    'A' => 0,
+    'B' => 0,
+    'C' => 0,
+    'D' => 0,
+    'Failing' => 0
+];
+
+while ($row = $result->fetch_assoc()) {
+    $percentage = (double) $row['score'] / (double) $row['max_score'] * 100;
+
+    if ($percentage >= 90) {
+        $grades['A']++;
+    } else if ($percentage >= 80) {
+        $grades['B']++;
+    } else if ($percentage >= 70) {
+        $grades['C']++;
+    } else if ($percentage >= 60) {
+        $grades['D']++;
+    } else {
+        $grades['Failing']++;
+    }
+}
+
 $conn->close();
 ?>
 
@@ -49,6 +76,7 @@ $conn->close();
     <meta charset="UTF-8">
     <title>Student Submissions</title>
     <link rel="stylesheet" type="text/css" href="test4.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <nav id="menu_area">
@@ -77,6 +105,29 @@ $conn->close();
             }
             ?>
         </div>
+        <canvas id="submissionChart"></canvas>
+        <script>document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('submissionChart').getContext('2d');
+            const chartData = {
+                labels: Object.keys(<?php echo json_encode($grades); ?>),
+                datasets: [{
+                    data: Object.values(<?php echo json_encode($grades); ?>),
+                    backgroundColor: ['green', 'lime', 'yellow', 'orange', 'red']
+                }]
+            };
+            const submissionChart = new Chart(ctx, {
+                type: 'pie',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { enabled: true }
+                    }
+                }
+            });
+        });
+        </script>
     </div>
-</body>
+    </body>
 </html>
