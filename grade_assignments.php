@@ -48,13 +48,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result_check_assignment->num_rows > 0) {
         // Assignment exists, update the score and feedback
-        $calculated_score = (double)$score / (double)$max_score;
         $sql_update_score = "UPDATE student_submissions SET score = ?, feedback = ? WHERE student_id = ? AND assignment_id = ?";
         $stmt = $conn->prepare($sql_update_score);
-        $stmt->bind_param("dsii", $calculated_score, $feedback, $student_id, $assignment_id);
+        $stmt->bind_param("dsii", $score, $feedback, $student_id, $assignment_id);
         $stmt->execute();
         $stmt->close();
-        echo "Score and feedback updated successfully!";
+        
+        $notification_message = "Score and feedback updated for student ID $student_id on assignment ID $assignment_id.";
+        file_put_contents("notifications.txt", $notification_message . PHP_EOL, FILE_APPEND);
+        echo "Update successful.";
     } else {
         echo "Assignment not found for the student.";
     }
@@ -67,7 +69,7 @@ $conn->close();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student</title>
+    <title>Grade Assignment</title>
     <link rel="stylesheet" type="text/css" href="test4.css">
 </head>
 <body>
