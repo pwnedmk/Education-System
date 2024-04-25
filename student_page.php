@@ -39,7 +39,7 @@ $examQuery = "Select exam.exam_id, title, dueDate from exam join examdates on ex
 $examResults = $conn->query($examQuery);
 $conn->close();
 ?>
-
+<br>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -130,9 +130,9 @@ $conn->close();
                             $due_date = strtotime($examResult['dueDate']);
                             $current_date = time();
                             if ($current_date <= $due_date) {
-                                echo "<p style='background-color: white, color: red;'><a href='takeExam.php?examID=" . $examResult['exam_id'] . "'>" . $examResult['title'] . "</a>";
+                                echo "<p style='background-color: white, color: red;'><a id= 'examlist' href='takeExam.php?examID=" . $examResult['exam_id'] . "'>" . $examResult['title'] . "</a>";
                                 echo "<span style='margin-left: 10px;'>Due Date: " . $examResult['dueDate'] . "</span>";
-                                echo "</p>";
+                                echo "<a href='/education-system/takeExam.php?examID=" . $examResult['exam_id'] . "' target='_blank'>View Assignment</a></hr></p>";
                             } else {
                                 echo "<p style='background-color: lightgray; color: black;'>Exam Title:&nbsp;" . $examResult['title'];
                                 echo "<span style='margin-left: 10px;'>Due Date: " . $examResult['dueDate'] . "</span>";
