@@ -99,11 +99,7 @@ $conn->close();
                 </div>
             </div>
             <div class="col2" id="none">
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+                <img src="candy1.jpg" style="width:310px; height:260px;" alt="candy">
             </div>
             <div class="col3" id="top_performer">
                 <ul>

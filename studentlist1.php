@@ -11,7 +11,8 @@
         <li><a href="admin_page.php">Home</a></li>
         <li><a href="studentlist1.php">Student List</a></li>
         <li><a href="teacherlist.php">Teacher List</a></li>
-        <li>Create New Users</li>
+        <li><a href="createNewuser.php">Create New User</a></li>
+        <li><a href="logout.php"><button>Logout</button></a></li>
     </ul>
 </nav>
 <div id="list_area">
@@ -60,7 +61,7 @@
             $conn->close();
             ?>
         </table>
-        <input type="submit" value="Delete Selected Students">
+        <input id="delete" type="submit" value="Delete Selected Students">
     </form>
 </div>
 </body>
