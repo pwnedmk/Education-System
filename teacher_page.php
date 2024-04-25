@@ -65,8 +65,9 @@ $conn->close();
             if ($result_assignments->num_rows > 0) {
                 while ($row_assignment = $result_assignments->fetch_assoc()) {
                     echo "<p><a href='assignment_submissions.php?assignment_id=" . $row_assignment['id'] . "'>" . $row_assignment['title'] . "</a>";
-                    echo "Due Date: " . $row_assignment['due_date'];
-                    echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a></p>";
+                    echo "<a href='" . $row_assignment['file_path'] . "' target='_blank'>View Assignment</a>";
+                    echo "Due Date: " . $row_assignment['due_date']. " </p>";
+                    
                 }
             } else {
                 echo "<p>No assignments found</p>";
