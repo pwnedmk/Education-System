@@ -31,7 +31,7 @@ if ($result_student_id->num_rows == 0) {
 } 
 
 // Retrieve the list of assignments from the teacher_assignments table
-$sql_assignments = "SELECT ta.title, ta.max_score, ss.score FROM teacher_assignments ta JOIN student_submissions ss ON ss.assignment_id = ta.id";
+$sql_assignments = "SELECT ta.id, ta.title, ta.max_score, ss.score, ss.feedback FROM teacher_assignments ta JOIN student_submissions ss ON ss.assignment_id = ta.id";
 $result_assignments = $conn->query($sql_assignments);   
 
 $conn->close();
@@ -63,12 +63,12 @@ $conn->close();
             while ($row_assignment = $result_assignments->fetch_assoc()) {
                 echo "<p style='background-color: white, color: red;'> Assignment Title:&nbsp;" . $row_assignment['title'];
                 echo "<a>Score: " . $row_assignment['score'] . "&nbsp;/&nbsp;" . $row_assignment['max_score'] . "</a></hr>";
+                echo "<p><b>Feedback:</b> " . $row_assignment['feedback'] . "</p>";
                 echo "</p>";
             }
         } else {
             echo "<p>No assignments found</p>";
         }
-
         ?>
     </div>
     <!-- Rest of the code remains the same -->
