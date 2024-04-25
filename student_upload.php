@@ -4,16 +4,18 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Check if the user is logged in
-// if (!isset($_SESSION["Username"]) || $_SESSION["UserType"] != 'student') {
-//     header("Location: login.php");
-//     exit();
-// }
-
 $servername = "localhost";
 $username = "admin";
 $password = "admin";
 $dbname = "educationsystem";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 $student_id = $_SESSION["ID"];
 
@@ -21,6 +23,22 @@ $student_id = $_SESSION["ID"];
 if (isset($_GET['assignment_id'])) {
     $assignment_id = $_GET['assignment_id'];
     echo "Assignment ID: " . $assignment_id;
+
+    // Retrieve assignment information using assignment_id
+    $sql_assignment_info = "SELECT title FROM teacher_assignments WHERE id = ?";
+    $stmt_assignment_info = $conn->prepare($sql_assignment_info);
+    $stmt_assignment_info->bind_param("i", $assignment_id);
+    $stmt_assignment_info->execute();
+    $result_assignment_info = $stmt_assignment_info->get_result();
+
+    // Check if assignment information is retrieved successfully
+    if ($result_assignment_info->num_rows > 0) {
+        $row_assignment_info = $result_assignment_info->fetch_assoc();
+        $assignment_title = $row_assignment_info['title'];
+        echo "<br>Assignment Title: " . $assignment_title;
+    } else {
+        echo "<br>Assignment not found.";
+    }
 } else {
     echo "Assignment ID not provided.";
     exit();
@@ -112,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Append log message to notifications.txt
             file_put_contents('notifications.txt', $logMessage, FILE_APPEND);
-            echo "Assignment submitted successfully.";
+            echo "";
         } else {
             echo "Error submitting assignment: " . $stmt->error;
         }
@@ -168,6 +186,9 @@ $conn->close();
             
             </div>
         </form>
+        <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+            <p><?php echo "Assignment submitted successfully."; ?></p>
+        <?php endif; ?>
     </div>
     <?php endif; ?>
 </body>
