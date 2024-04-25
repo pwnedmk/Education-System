@@ -107,7 +107,7 @@ $conn->close();
                 </div>
             </div>
             <div class="col2" id="none">
-                <img src="candy1.jpg" style="width:310px; height:260px;" alt="candy">
+                <img src="wsulogo.jpg" style="width:290px; height: 240px;" alt="candy">
             </div>
             <div class="col3" id="top_performer">
                 <ul>
