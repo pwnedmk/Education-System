@@ -35,7 +35,7 @@ $sql_assignments = "SELECT  id, title, file_path, due_date FROM teacher_assignme
 $result_assignments = $conn->query($sql_assignments);   
 
 //retrieve list of exams
-$examQuery = "Select exam_id, title, dueDate from exam from exam join examdates on exam.exam_id = examdates.exam_id";
+$examQuery = "Select exam.exam_id, title, dueDate from exam join examdates on exam.exam_id = examdates.exam_id";
 $examResults = $conn->query($examQuery);
 $conn->close();
 ?>
@@ -127,7 +127,7 @@ $conn->close();
                     <?php
                     if ($examResults->num_rows > 0) {
                         while ($examResult = $examResults->fetch_assoc()) {
-                            $due_date = strtotime($row_assignment['dueDate']);
+                            $due_date = strtotime($examResult['dueDate']);
                             $current_date = time();
                             if ($current_date <= $due_date) {
                                 echo "<p style='background-color: white, color: red;'><a href='student_upload.php?assignment_id=" . $examResult['exam_id'] . "'>" . $examResult['title'] . "</a>";
