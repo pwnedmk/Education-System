@@ -40,6 +40,10 @@ foreach ($_POST as $name => $value) {
         array_push($checkQuestionIDs, $questionId);
     }
 }
+
+$notification_message = "Exam $examID has been submittedd by $user ($student_id).\n";
+file_put_contents("notifications.txt", $notification_message . PHP_EOL, FILE_APPEND);
+
 $responseData = ['grade' => $grade, 'checkQuestionIDs' => $checkQuestionIDs];
 echo json_encode($responseData);
 ?>

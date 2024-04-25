@@ -86,5 +86,6 @@ if (isset($_POST["ESq"])){
         }
     }
 }
-
+$notification_message = "Exam $exam_id has been created.\n";
+file_put_contents("notifications.txt", $notification_message . PHP_EOL, FILE_APPEND);
 ?>
